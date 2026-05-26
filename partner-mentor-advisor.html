@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentor / Advisor — Partner with BPS 101 Work-Based Learning</title>
+  <link rel="icon" type="image/svg+xml" href="workbased-learning-favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 50:'#f5f5f5',100:'#e5e5e5',200:'#D9D9D9',400:'#8a8a8a',500:'#5D5D5D',700:'#333333',800:'#1a1a1a',900:'#000000' },
+            gold: { 500:'#FBCD07',600:'#DAB107',700:'#9a7305',800:'#7d5c0b',900:'#66490f' },
+          },
+          fontFamily: {
+            heading: ['Montserrat','system-ui','sans-serif'],
+            body: ['Open Sans','system-ui','sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Open Sans', system-ui, sans-serif; background: #fff; color: #000; }
+    .font-heading { font-family: 'Montserrat', system-ui, sans-serif; }
+    @media print {
+      .no-print { display: none !important; }
+      .print-show { display: block !important; }
+      @page { size: letter; margin: 0.4in; }
+      .preserve-bg { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+    .preserve-bg { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-show { display: none; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Top nav -->
+  <nav class="no-print bg-black text-white px-6 py-3 flex items-center justify-between sticky top-0 z-10">
+    <a href="index.html" class="flex items-center gap-2 text-sm font-heading font-semibold hover:text-yellow-400 transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+      Back to WBL Site
+    </a>
+    <button onclick="window.print()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 text-sm font-heading font-semibold transition-colors rounded">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+      Print One-Pager
+    </button>
+  </nav>
+
+  <main class="max-w-4xl mx-auto">
+
+    <!-- Header: dark navy with gold accent -->
+    <header class="preserve-bg bg-navy-900 text-white px-10 py-10">
+      <div class="flex items-start justify-between mb-8 gap-4">
+        <div>
+          <p class="text-xs uppercase tracking-widest font-heading font-semibold opacity-60 mb-0.5">Batavia Public Schools · BPS 101</p>
+          <p class="text-sm font-heading font-bold opacity-85">Work-Based Learning Program</p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <p class="text-xs font-heading font-semibold opacity-50 uppercase tracking-wider">Partner with us</p>
+          <p class="text-xs opacity-40 mt-0.5">forms.gle/LKtvgfaYBpTfWMSB9</p>
+        </div>
+      </div>
+      <p class="text-xs uppercase tracking-widest font-heading font-semibold opacity-60 mb-2">Partnership Opportunity</p>
+      <h1 class="font-heading font-black text-6xl tracking-tight leading-none mb-3">Mentor /<br>Advisor</h1>
+      <p class="text-lg font-heading font-semibold" style="color:#FBCD07">Guide. Challenge. Shape Tomorrow.</p>
+    </header>
+
+    <!-- Main content grid -->
+    <div class="grid md:grid-cols-3 border-b border-navy-200">
+
+      <!-- Left: At a Glance + Benefits -->
+      <div class="md:col-span-2 p-8 md:border-r border-navy-200">
+        <p class="text-xs uppercase tracking-widest font-heading font-semibold text-gold-700 mb-3">At a Glance</p>
+        <p class="font-heading font-bold text-navy-900 text-2xl leading-snug mb-4">Coach students on real projects — as little or as much as you want.</p>
+        <p class="text-navy-500 leading-relaxed text-sm mb-8">Provide industry feedback, problem-solving guidance, and real-world insight on class projects, team challenges, or business ideas. Options range from a single check-in to longer-term mentoring across a semester. You define the scope.</p>
+
+        <p class="text-xs uppercase tracking-widest font-heading font-semibold text-gold-700 mb-4">Benefits for Your Business</p>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3">
+            <span class="preserve-bg w-5 h-5 rounded bg-gold-500 text-navy-900 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">✓</span>
+            <div>
+              <p class="font-heading font-semibold text-navy-900 text-sm">Shape the skills of future employees</p>
+              <p class="text-xs text-navy-400 mt-0.5">Influence the workforce before they enter it</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="preserve-bg w-5 h-5 rounded bg-gold-500 text-navy-900 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">✓</span>
+            <div>
+              <p class="font-heading font-semibold text-navy-900 text-sm">Gain fresh perspectives from student ideas</p>
+              <p class="text-xs text-navy-400 mt-0.5">Students often surface creative approaches to real business problems</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="preserve-bg w-5 h-5 rounded bg-gold-500 text-navy-900 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">✓</span>
+            <div>
+              <p class="font-heading font-semibold text-navy-900 text-sm">Build visibility as an innovation-minded partner</p>
+              <p class="text-xs text-navy-400 mt-0.5">Position your business as forward-thinking in the Batavia community</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right: Quick facts -->
+      <div class="preserve-bg p-8 bg-navy-50 space-y-6">
+        <div>
+          <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400 mb-1">Time Commitment</p>
+          <p class="font-heading font-bold text-navy-900 text-lg leading-tight">1–6 touchpoints per semester</p>
+          <p class="text-xs text-navy-400 mt-1">Flexible — you set the pace and scope</p>
+        </div>
+        <div class="border-t border-navy-200 pt-5">
+          <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400 mb-2">Student Profile</p>
+          <ul class="space-y-1.5">
+            <li class="text-sm text-navy-600 flex items-start gap-2"><span class="text-gold-600 font-bold flex-shrink-0">→</span><span>Motivated CTE or entrepreneurship students</span></li>
+            <li class="text-sm text-navy-600 flex items-start gap-2"><span class="text-gold-600 font-bold flex-shrink-0">→</span><span>Prepared to receive and act on feedback</span></li>
+            <li class="text-sm text-navy-600 flex items-start gap-2"><span class="text-gold-600 font-bold flex-shrink-0">→</span><span>Present work professionally</span></li>
+          </ul>
+        </div>
+        <div class="border-t border-navy-200 pt-5">
+          <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400 mb-2">Your Role</p>
+          <ul class="space-y-1.5">
+            <li class="text-xs text-navy-500 flex items-start gap-2"><span class="flex-shrink-0">—</span><span>Provide industry context and feedback</span></li>
+            <li class="text-xs text-navy-500 flex items-start gap-2"><span class="flex-shrink-0">—</span><span>Challenge students with real-world thinking</span></li>
+            <li class="text-xs text-navy-500 flex items-start gap-2"><span class="flex-shrink-0">—</span><span>Virtual or in-person — your choice</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- What NOT to expect -->
+    <div class="preserve-bg bg-navy-900 text-white p-8">
+      <p class="text-xs uppercase tracking-widest font-heading font-semibold text-white/40 mb-5">What You Should NOT Expect</p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="flex items-start gap-3">
+          <span class="preserve-bg text-gold-500 font-black text-xl leading-none flex-shrink-0 mt-0.5">✕</span>
+          <p class="text-sm text-white/65 leading-relaxed">No required weekly schedule — you set the cadence</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="preserve-bg text-gold-500 font-black text-xl leading-none flex-shrink-0 mt-0.5">✕</span>
+          <p class="text-sm text-white/65 leading-relaxed">Not responsible for grading, supervision, or attendance</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="preserve-bg text-gold-500 font-black text-xl leading-none flex-shrink-0 mt-0.5">✕</span>
+          <p class="text-sm text-white/65 leading-relaxed">No expectation of financial sponsorship or payment</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="p-10 text-center">
+      <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400 mb-2">Ready to Partner?</p>
+      <h2 class="font-heading font-bold text-3xl text-navy-900 mb-3">Fill out our partner interest form</h2>
+      <p class="text-navy-500 text-sm mb-6 max-w-sm mx-auto">Takes less than 5 minutes. Our WBL coordinator will follow up within two school days.</p>
+      <a href="https://forms.gle/LKtvgfaYBpTfWMSB9" target="_blank" rel="noopener"
+         class="no-print preserve-bg inline-block bg-gold-500 text-navy-900 font-heading font-bold px-8 py-4 text-sm uppercase tracking-wider hover:bg-gold-600 transition-colors">
+        Partner Today →
+      </a>
+      <p class="print-show font-heading font-bold text-gold-700 text-lg">forms.gle/LKtvgfaYBpTfWMSB9</p>
+      <p class="text-xs text-navy-400 mt-5 font-heading">Questions? Contact the WBL Coordinator · Batavia High School · BPS 101</p>
+    </div>
+
+  </main>
+
+</body>
+</html>

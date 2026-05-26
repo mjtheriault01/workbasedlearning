@@ -79,6 +79,9 @@
     }
   </script>
 
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
   <style>
     * { box-sizing: border-box; }
     body {
@@ -311,6 +314,74 @@
     video {
       background: #000;
     }
+
+    /* ── Button depth & click feedback ── */
+    .cta-primary {
+      box-shadow: 0 4px 16px rgba(172,22,29,0.30);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease, filter 0.15s ease !important;
+    }
+    .cta-primary:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 10px 28px rgba(172,22,29,0.42) !important;
+      filter: brightness(1.06);
+    }
+    .cta-primary:active {
+      transform: translateY(0) scale(0.98) !important;
+      box-shadow: 0 2px 8px rgba(172,22,29,0.22) !important;
+      transition-duration: 0.06s !important;
+    }
+    .cta-outline {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease, color 0.2s ease !important;
+    }
+    .cta-outline:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.14) !important;
+    }
+    .cta-outline:active {
+      transform: translateY(0) scale(0.99) !important;
+      transition-duration: 0.06s !important;
+    }
+
+    /* ── Partner spotlight modal ── */
+    .partner-hero-section {
+      position: relative;
+      height: 260px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .partner-hero-bg {
+      position: absolute;
+      inset: -8%;
+      width: 116%;
+      height: 116%;
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+    }
+    .partner-hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.06) 0%, rgba(3,7,18,0.82) 100%);
+    }
+    .partner-hero-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 10;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.40);
+      backdrop-filter: blur(6px);
+      border: 1.5px solid rgba(255,255,255,0.20);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .partner-hero-close:hover { background: rgba(0,0,0,0.65); }
   </style>
 </head>
 
@@ -603,9 +674,9 @@
           </div>
           <p class="text-navy-600 text-sm leading-relaxed mb-4">A few hours to 1–2 days. Students observe your team, ask questions, and explore your industry firsthand.</p>
           <p class="text-xs text-navy-400 uppercase tracking-wider font-semibold mb-5">Minimal commitment · Fully flexible</p>
-          <a href="/pdfs/job-shadow.pdf" download onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-crimson-800 hover:text-crimson-900 border border-crimson-200 hover:border-crimson-800 px-3 py-2 transition-colors">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-            Download One-Pager
+          <a href="partner-job-shadow.html" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-crimson-800 hover:text-crimson-900 border border-crimson-200 hover:border-crimson-800 px-3 py-2 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            View One-Pager
           </a>
         </div>
 
@@ -624,9 +695,9 @@
           </div>
           <p class="text-navy-600 text-sm leading-relaxed mb-4">One class period. Share your career story and industry insights with students who are actively preparing for your field.</p>
           <p class="text-xs text-navy-400 uppercase tracking-wider font-semibold mb-5">One session · No heavy prep needed</p>
-          <a href="/pdfs/guest-speaker.pdf" download onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-700 hover:text-teal-800 border border-teal-200 hover:border-teal-600 px-3 py-2 transition-colors">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-            Download One-Pager
+          <a href="partner-guest-speaker.html" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-700 hover:text-teal-800 border border-teal-200 hover:border-teal-600 px-3 py-2 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            View One-Pager
           </a>
         </div>
 
@@ -645,9 +716,9 @@
           </div>
           <p class="text-navy-600 text-sm leading-relaxed mb-4">Flexible check-ins. Coach CTE or entrepreneurship students on real projects, challenges, and industry thinking.</p>
           <p class="text-xs text-navy-400 uppercase tracking-wider font-semibold mb-5">1–6 touchpoints per semester</p>
-          <a href="/pdfs/mentor-advisor.pdf" download onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-gold-700 hover:text-gold-800 border border-gold-200 hover:border-gold-500 px-3 py-2 transition-colors">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-            Download One-Pager
+          <a href="partner-mentor-advisor.html" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-gold-700 hover:text-gold-800 border border-gold-200 hover:border-gold-500 px-3 py-2 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            View One-Pager
           </a>
         </div>
 
@@ -669,49 +740,10 @@
           </div>
           <p class="text-navy-300 text-sm leading-relaxed mb-4">A full semester. Students contribute real work—supervised, coached by BHS staff, and aligned to your industry. 60+ hours minimum.</p>
           <p class="text-xs text-gold-500 uppercase tracking-wider font-semibold mb-5">Preview your next hire · Build your pipeline</p>
-          <a href="/pdfs/field-experience.pdf" download onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-gold-400 hover:text-gold-300 border border-gold-500/40 hover:border-gold-400 px-3 py-2 transition-colors">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-            Download One-Pager
+          <a href="partner-field-experience.html" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-gold-400 hover:text-gold-300 border border-gold-500/40 hover:border-gold-400 px-3 py-2 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            View One-Pager
           </a>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Why WBL Matters Section -->
-  <section class="py-24 md:py-32 px-6 md:px-8 bg-navy-50">
-    <div class="max-w-7xl mx-auto">
-
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-
-        <div class="lg:col-span-5">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-0.5 bg-crimson-800"></div>
-            <p class="text-sm uppercase tracking-widest text-crimson-800 font-semibold">The Real Value</p>
-          </div>
-          <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 mb-6">
-            Real experience. <span class="text-crimson-800">Before it's too late.</span>
-          </h2>
-          <p class="text-lg text-navy-600 leading-relaxed">
-            Most students leave high school uncertain about what comes next. By the time they discover the wrong path, they've already paid for two years of college to find out. Work-Based Learning changes that — students explore real careers while there's still time to course-correct.
-          </p>
-        </div>
-
-        <div class="lg:col-span-6 lg:col-start-7 space-y-6">
-          <div class="border-l-4 border-crimson-800 pl-6">
-            <h3 class="font-heading font-bold text-navy-900 mb-2">Know Before You Invest</h3>
-            <p class="text-navy-600 leading-relaxed">Testing a career field in high school is free. Testing it in college can cost $50,000 and two years. Students who complete Field Experience leave with real clarity — they know whether this path is right for them, or whether it's time to pivot.</p>
-          </div>
-          <div class="border-l-4 border-teal-600 pl-6">
-            <h3 class="font-heading font-bold text-navy-900 mb-2">Build What Gets You Hired</h3>
-            <p class="text-navy-600 leading-relaxed">Grades open doors. Experience closes deals. Students leave with a real work history, professional references from Batavia businesses, and documented proof of what they can actually do — before graduation.</p>
-          </div>
-          <div class="border-l-4 border-gold-500 pl-6">
-            <h3 class="font-heading font-bold text-navy-900 mb-2">Structured, Not Just Busy Work</h3>
-            <p class="text-navy-600 leading-relaxed">Every placement is backed by a workplace-readiness bootcamp, ongoing BHS staff check-ins, and a final capstone reflection. Students arrive prepared. They leave with something real to show for it.</p>
-          </div>
         </div>
 
       </div>
@@ -737,14 +769,10 @@
 
         <div class="lg:col-span-6 lg:col-start-7">
           <p class="text-xl leading-relaxed text-navy-700 mb-6">
-            The old system rewarded students with connections—parents who owned businesses,
-            family friends in the right industries. If you didn't have those networks,
-            you didn't get the experience.
+            Having connections is one of the biggest advantages a young person can have. A parent who owns a business, a neighbor in the right field, a family friend who says "come shadow me for a week" — those experiences shape careers. There's nothing wrong with that.
           </p>
           <p class="text-lg leading-relaxed text-navy-500 mb-8">
-            Work-Based Learning at BPS 101 changes that equation. We build the partnerships.
-            We provide the coaching. We create pathways that don't depend on
-            who your parents know.
+            Work-Based Learning exists to make sure every Batavia student has the same opportunity. We build the partnerships, open the doors, and place students in front of real professionals in their field — so every student leaves with a network they earned on the job.
           </p>
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-full bg-teal-600 text-white flex items-center justify-center">
@@ -752,122 +780,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
               </svg>
             </div>
-            <p class="font-medium text-navy-900">State-aligned, equity-centered, and community-driven</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Secondary Themes / Cards Section -->
-  <section id="program" class="py-24 md:py-32 px-6 md:px-8 bg-navy-50">
-    <div class="max-w-7xl mx-auto">
-
-      <div class="text-center mb-16">
-        <p class="text-sm uppercase tracking-widest text-crimson-800 font-semibold mb-4">Why BPS 101 WBL Is Different</p>
-        <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900">
-          Not just a program. A pipeline.
-        </h2>
-      </div>
-
-      <!-- Cards Grid -->
-      <div class="grid md:grid-cols-2 gap-6">
-
-        <!-- Card 1: Student Ownership -->
-        <div class="theme-card group cursor-pointer relative overflow-hidden rounded-lg border-l-4 border-crimson-800" onclick="openModal('ownership')">
-          <img src="https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,e_improve,e_sharpen:60,e_vibrance:20/wbl/students/incubator-1" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-          <div class="absolute inset-0 bg-white/85 group-hover:bg-white/75 transition-all duration-500"></div>
-          <div class="relative z-10 p-8 md:p-10">
-            <div class="flex justify-between items-start mb-6">
-              <div class="w-14 h-14 rounded-lg bg-crimson-100 text-crimson-800 flex items-center justify-center">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
-              </div>
-              <span class="w-10 h-10 rounded-full border border-navy-200 flex items-center justify-center group-hover:border-crimson-800 group-hover:bg-crimson-800 transition-all">
-                <svg class="w-4 h-4 text-navy-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                </svg>
-              </span>
-            </div>
-            <h3 class="font-heading text-xl md:text-2xl font-bold text-navy-900 mb-3">Student Ownership</h3>
-            <p class="text-navy-600 leading-relaxed">
-              You apply. You interview. You earn your placement. Just like the real world.
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 2: Business Partnership -->
-        <div class="theme-card group cursor-pointer relative overflow-hidden rounded-lg border-l-4 border-teal-600" onclick="openModal('business')">
-          <img src="https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,e_improve,e_sharpen:60,e_vibrance:20/wbl/hero/hero-2" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-          <div class="absolute inset-0 bg-white/85 group-hover:bg-white/75 transition-all duration-500"></div>
-          <div class="relative z-10 p-8 md:p-10">
-            <div class="flex justify-between items-start mb-6">
-              <div class="w-14 h-14 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                </svg>
-              </div>
-              <span class="w-10 h-10 rounded-full border border-navy-200 flex items-center justify-center group-hover:border-teal-600 group-hover:bg-teal-600 transition-all">
-                <svg class="w-4 h-4 text-navy-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                </svg>
-              </span>
-            </div>
-            <h3 class="font-heading text-xl md:text-2xl font-bold text-navy-900 mb-3">Business Partnership</h3>
-            <p class="text-navy-600 leading-relaxed">
-              This isn't charity. Partners get motivated talent, fresh ideas, and a pipeline to future hires.
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 3: Structured Coaching -->
-        <div class="theme-card group cursor-pointer relative overflow-hidden rounded-lg border-l-4 border-gold-500" onclick="openModal('structure')">
-          <img src="https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,e_improve,e_sharpen:60,e_vibrance:20/wbl/students/incubator-4" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-          <div class="absolute inset-0 bg-white/85 group-hover:bg-white/75 transition-all duration-500"></div>
-          <div class="relative z-10 p-8 md:p-10">
-            <div class="flex justify-between items-start mb-6">
-              <div class="w-14 h-14 rounded-lg bg-gold-100 text-gold-600 flex items-center justify-center">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                </svg>
-              </div>
-              <span class="w-10 h-10 rounded-full border border-navy-200 flex items-center justify-center group-hover:border-gold-500 group-hover:bg-gold-500 transition-all">
-                <svg class="w-4 h-4 text-navy-400 group-hover:text-navy-900 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                </svg>
-              </span>
-            </div>
-            <h3 class="font-heading text-xl md:text-2xl font-bold text-navy-900 mb-3">Structured Coaching</h3>
-            <p class="text-navy-600 leading-relaxed">
-              Bootcamp, ongoing coaching, accountability, and a capstone. Not just "go somewhere."
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 4: Safe Exploration -->
-        <div class="theme-card group cursor-pointer relative overflow-hidden rounded-lg border-l-4 border-navy-900" onclick="openModal('exploration')">
-          <img src="https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,e_improve,e_sharpen:60,e_vibrance:20/wbl/hero/hero-4" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-          <div class="absolute inset-0 bg-white/85 group-hover:bg-white/75 transition-all duration-500"></div>
-          <div class="relative z-10 p-8 md:p-10">
-            <div class="flex justify-between items-start mb-6">
-              <div class="w-14 h-14 rounded-lg bg-navy-100 text-navy-900 flex items-center justify-center">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                </svg>
-              </div>
-              <span class="w-10 h-10 rounded-full border border-navy-200 flex items-center justify-center group-hover:border-navy-900 group-hover:bg-navy-900 transition-all">
-                <svg class="w-4 h-4 text-navy-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                </svg>
-              </span>
-            </div>
-            <h3 class="font-heading text-xl md:text-2xl font-bold text-navy-900 mb-3">Safe Exploration</h3>
-            <p class="text-navy-600 leading-relaxed">
-              High school is the perfect time to try, learn, and grow—with support.
-            </p>
+            <p class="font-medium text-navy-900">Community-built, career-focused, and open to every student</p>
           </div>
         </div>
 
@@ -958,7 +871,7 @@
               poster=""
               onclick="this.paused ? this.play() : this.pause()"
             >
-              <source src="/videos/incubator.mp4" type="video/mp4">
+              <source src="https://res.cloudinary.com/dikkdclum/video/upload/vc_h264,f_mp4/wbl/video/incubator.mp4" type="video/mp4">
             </video>
 
             <!-- Play Button Overlay -->
@@ -1080,148 +993,56 @@
     </div>
   </section>
 
-  <!-- What Students Bring Section -->
-  <section class="py-24 md:py-32 px-6 md:px-8 bg-navy-950 text-white">
-    <div class="max-w-7xl mx-auto">
-
-      <div class="text-center mb-16">
-        <p class="text-sm uppercase tracking-widest text-gold-500 font-semibold mb-4">For Our Business Partners</p>
-        <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-          What our students bring to the table.
-        </h2>
-        <p class="text-lg text-navy-300 max-w-2xl mx-auto">
-          Pre-selected. Pre-trained. Ready to contribute from day one. This isn't charity — it's a pipeline.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <div class="bg-white/5 border border-white/10 rounded-lg p-8 hover:bg-white/10 hover:border-gold-500/40 transition-all">
-          <div class="w-12 h-12 rounded-lg bg-gold-500/20 text-gold-500 flex items-center justify-center mb-5">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-          </div>
-          <h3 class="font-heading font-bold text-white mb-3">Professionally Vetted</h3>
-          <p class="text-navy-300 leading-relaxed text-sm">Students apply, interview, and earn their placements competitively. By the time they walk through your door, they've already proven they want to be there.</p>
-        </div>
-
-        <div class="bg-white/5 border border-white/10 rounded-lg p-8 hover:bg-white/10 hover:border-gold-500/40 transition-all">
-          <div class="w-12 h-12 rounded-lg bg-crimson-800/30 text-crimson-400 flex items-center justify-center mb-5">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-            </svg>
-          </div>
-          <h3 class="font-heading font-bold text-white mb-3">Pre-Training Complete</h3>
-          <p class="text-navy-300 leading-relaxed text-sm">Every student completes a workplace-readiness bootcamp covering professional communication, expectations, and conduct before their first day with you.</p>
-        </div>
-
-        <div class="bg-white/5 border border-white/10 rounded-lg p-8 hover:bg-white/10 hover:border-gold-500/40 transition-all">
-          <div class="w-12 h-12 rounded-lg bg-teal-600/20 text-teal-400 flex items-center justify-center mb-5">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-          </div>
-          <h3 class="font-heading font-bold text-white mb-3">Coached Throughout</h3>
-          <p class="text-navy-300 leading-relaxed text-sm">BHS staff conduct regular check-ins during every placement. You have a school contact. Issues are addressed early. You're not managing this alone.</p>
-        </div>
-
-        <div class="bg-white/5 border border-white/10 rounded-lg p-8 hover:bg-white/10 hover:border-gold-500/40 transition-all">
-          <div class="w-12 h-12 rounded-lg bg-gold-500/20 text-gold-500 flex items-center justify-center mb-5">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-            </svg>
-          </div>
-          <h3 class="font-heading font-bold text-white mb-3">Low-Risk Extended Preview</h3>
-          <p class="text-navy-300 leading-relaxed text-sm">A full-semester placement is the world's best extended job interview — 60+ hours to see how they think, communicate, and contribute before you ever commit to hiring them.</p>
-        </div>
-
-        <div class="bg-white/5 border border-white/10 rounded-lg p-8 hover:bg-white/10 hover:border-gold-500/40 transition-all">
-          <div class="w-12 h-12 rounded-lg bg-crimson-800/30 text-crimson-400 flex items-center justify-center mb-5">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-            </svg>
-          </div>
-          <h3 class="font-heading font-bold text-white mb-3">Fresh Energy & Skills</h3>
-          <p class="text-navy-300 leading-relaxed text-sm">These students are native to the digital tools slowing your team down — from social media to design apps to spreadsheets. They arrive with skills your team wants more of.</p>
-        </div>
-
-        <div class="bg-crimson-800/20 border border-crimson-800/40 rounded-lg p-8 hover:bg-crimson-800/30 transition-all">
-          <div class="w-12 h-12 rounded-lg bg-crimson-800/40 text-crimson-300 flex items-center justify-center mb-5">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-          </div>
-          <h3 class="font-heading font-bold text-white mb-3">Community Credibility</h3>
-          <p class="text-navy-300 leading-relaxed text-sm">Your business is recognized as a BHS Field Experience partner — visible to students, parents, and the Batavia community. That goodwill is real and lasting.</p>
-        </div>
-
-      </div>
-
-      <div class="mt-12 text-center">
-        <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="inline-flex items-center gap-3 bg-gold-500 text-navy-900 px-8 py-4 text-sm font-bold uppercase tracking-wider hover:bg-gold-400 transition-colors">
-          <span>Become a Partner</span>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-          </svg>
-        </button>
-      </div>
-
-    </div>
-  </section>
-
   <!-- For Business Section -->
   <section id="business" class="py-24 md:py-32 px-6 md:px-8">
     <div class="max-w-7xl mx-auto">
 
+      <!-- Header -->
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-end mb-12 md:mb-16">
+        <div>
+          <p class="text-sm uppercase tracking-widest text-teal-600 font-semibold mb-4">For Business Partners</p>
+          <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900">
+            Build your future workforce.
+          </h2>
+        </div>
+        <p class="text-lg text-navy-600 leading-relaxed">
+          By the time a student walks through your door, they've already completed a professional readiness bootcamp, applied and interviewed competitively for their placement, and committed to 60+ supervised hours. Real experience — while there's still time to matter.
+        </p>
+      </div>
+
+      <!-- What Students Bring — 3 mini-cards -->
+      <div class="grid md:grid-cols-3 gap-4 mb-16">
+
+        <div class="bg-navy-50 rounded-lg p-6 border-t-4 border-crimson-800">
+          <div class="w-10 h-10 rounded-lg bg-crimson-100 text-crimson-800 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3 class="font-heading font-bold text-navy-900 mb-2">Pre-Screened &amp; Vetted</h3>
+          <p class="text-sm text-navy-600 leading-relaxed">Students apply and interview for every placement. By the time they arrive, they've already proven they want to be there.</p>
+        </div>
+
+        <div class="bg-navy-50 rounded-lg p-6 border-t-4 border-teal-600">
+          <div class="w-10 h-10 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          </div>
+          <h3 class="font-heading font-bold text-navy-900 mb-2">Workplace-Ready on Day One</h3>
+          <p class="text-sm text-navy-600 leading-relaxed">Every student completes a readiness bootcamp covering professional communication, expectations, and conduct before their first day with you.</p>
+        </div>
+
+        <div class="bg-navy-50 rounded-lg p-6 border-t-4 border-gold-500">
+          <div class="w-10 h-10 rounded-lg bg-gold-100 text-gold-600 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="font-heading font-bold text-navy-900 mb-2">60+ Hour Extended Preview</h3>
+          <p class="text-sm text-navy-600 leading-relaxed">A full-semester placement is the world's best extended job interview — see how they think, communicate, and contribute before you ever commit to hiring.</p>
+        </div>
+
+      </div>
+
+      <!-- Two-column: CTA/contacts + Partnership tiers -->
       <div class="grid lg:grid-cols-2 gap-16 lg:gap-24">
 
         <div>
-          <p class="text-sm uppercase tracking-widest text-teal-600 font-semibold mb-4">For Business Partners</p>
-          <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 mb-6">
-            Build your future workforce.
-          </h2>
-          <p class="text-lg text-navy-600 leading-relaxed mb-8">
-            Partner with Batavia High School to access motivated, coachable talent.
-            Preview potential future employees. Get fresh ideas and support on the
-            projects you've never had time to tackle.
-          </p>
-
-          <div class="space-y-4 mb-10">
-            <div class="flex items-start gap-4">
-              <div class="w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
-              </div>
-              <p class="text-navy-700">Access to pre-screened, motivated students</p>
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
-              </div>
-              <p class="text-navy-700">Preview potential future employees before hiring</p>
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
-              </div>
-              <p class="text-navy-700">Fresh ideas and tech-fluent support for daily tasks</p>
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
-              </div>
-              <p class="text-navy-700">Strengthen your community partnership and reputation</p>
-            </div>
-          </div>
-
           <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
             <span>Interested? Fill Out the Partner Form</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1304,25 +1125,23 @@
           <!-- One-Pager Downloads -->
           <div class="mt-8 bg-navy-50 p-6 rounded-lg">
             <h4 class="font-heading font-bold text-navy-900 mb-1">What does each partnership look like?</h4>
-            <p class="text-sm text-navy-500 mb-4">Download our one-pagers for a quick overview of expectations for each partnership type.</p>
+            <p class="text-sm text-navy-500 mb-4">View our one-pagers for a full overview of each partnership type — each page includes a print option.</p>
             <div class="flex flex-wrap gap-3">
-              <a href="#" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                </svg>
+              <a href="partner-field-experience.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                 Field Experience
               </a>
-              <a href="#" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                </svg>
-                Job Shadowing
+              <a href="partner-job-shadow.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                Job Shadow
               </a>
-              <a href="#" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                </svg>
-                Mentorship
+              <a href="partner-mentor-advisor.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                Mentor / Advisor
+              </a>
+              <a href="partner-guest-speaker.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                Guest Speaker
               </a>
             </div>
           </div>
@@ -1348,84 +1167,15 @@
         </p>
       </div>
 
-      <!-- Partner Grid -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-16">
-
-        <!-- Organic Life -->
-        <div class="bg-white border border-navy-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[120px] gap-3 hover:border-crimson-800 hover:shadow-md transition-all group">
-          <img src="https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,h_56/wbl/logos/organic-life" alt="Organic Life" class="h-10 w-auto object-contain" />
-          <div class="text-center">
-            <p class="font-heading font-bold text-navy-900 text-sm">Organic Life</p>
-            <p class="text-[10px] uppercase tracking-wider text-navy-400 mt-0.5">Food Service</p>
-          </div>
-        </div>
-
-        <!-- Batavia Public Library -->
-        <div class="bg-white border border-navy-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[120px] gap-3 hover:border-crimson-800 hover:shadow-md transition-all group">
-          <img src="https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,h_56/wbl/logos/batavia-library" alt="Batavia Public Library" class="h-10 w-auto object-contain" />
-          <div class="text-center">
-            <p class="font-heading font-bold text-navy-900 text-sm">Batavia Public Library</p>
-            <p class="text-[10px] uppercase tracking-wider text-navy-400 mt-0.5">Education & Community</p>
-          </div>
-        </div>
-
-        <!-- Batavia Public Schools -->
-        <div class="bg-crimson-800 border border-crimson-900 rounded-lg p-6 flex flex-col items-center justify-center min-h-[120px] gap-3 hover:border-gold-500 hover:shadow-md transition-all group">
-          <img src="https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,h_56/wbl/logos/bps101" alt="Batavia Public Schools" class="h-10 w-auto object-contain" />
-          <div class="text-center">
-            <p class="font-heading font-bold text-white text-sm">Batavia Public Schools</p>
-            <p class="text-[10px] uppercase tracking-wider text-gold-400 mt-0.5">Education · BPS 101</p>
-          </div>
-        </div>
-
-        <!-- Orbis Design — logo is white-on-dark, give card a dark bg -->
-        <div class="bg-navy-900 border border-navy-700 rounded-lg p-6 flex flex-col items-center justify-center min-h-[120px] gap-3 hover:border-crimson-800 hover:shadow-md transition-all group">
-          <img src="https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,h_56/wbl/logos/orbis-design-v2" alt="Orbis Design" class="h-10 w-auto object-contain" />
-          <div class="text-center">
-            <p class="font-heading font-bold text-white text-sm">Orbis Design</p>
-            <p class="text-[10px] uppercase tracking-wider text-navy-400 mt-0.5">Design & Marketing</p>
-          </div>
-        </div>
-
-        <!-- Easter Seals -->
-        <div class="bg-white border border-navy-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[120px] gap-3 hover:border-crimson-800 hover:shadow-md transition-all group">
-          <img src="https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,h_56/wbl/logos/easter-seals-v2" alt="Easter Seals" class="h-10 w-auto object-contain" />
-          <div class="text-center">
-            <p class="font-heading font-bold text-navy-900 text-sm">Easter Seals</p>
-            <p class="text-[10px] uppercase tracking-wider text-navy-400 mt-0.5">Nonprofit · Disability Services</p>
-          </div>
-        </div>
-
-        <!-- Fire 'n' Ice HVAC -->
-        <div class="bg-white border border-navy-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[120px] gap-3 hover:border-crimson-800 hover:shadow-md transition-all group">
-          <img src="https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,h_56/wbl/logos/firnice-hvac" alt="Fire 'n' Ice HVAC" class="h-10 w-auto object-contain" />
-          <div class="text-center">
-            <p class="font-heading font-bold text-navy-900 text-sm">Fire 'n' Ice HVAC</p>
-            <p class="text-[10px] uppercase tracking-wider text-navy-400 mt-0.5">Skilled Trades · HVAC</p>
-          </div>
-        </div>
-
-        <!-- Bulldog Plumbing -->
-        <div class="bg-white border border-navy-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[120px] gap-3 hover:border-crimson-800 hover:shadow-md transition-all group">
-          <img src="https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,h_56/wbl/logos/bulldog-plumbing" alt="Bulldog Plumbing" class="h-10 w-auto object-contain" />
-          <div class="text-center">
-            <p class="font-heading font-bold text-navy-900 text-sm">Bulldog Plumbing</p>
-            <p class="text-[10px] uppercase tracking-wider text-navy-400 mt-0.5">Skilled Trades · Plumbing</p>
-          </div>
-        </div>
-
-        <!-- Your Business? CTA slot -->
-        <div class="bg-white border-2 border-dashed border-navy-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[120px] gap-3 hover:border-crimson-800 transition-all cursor-pointer" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')">
-          <div class="w-10 h-10 rounded-lg bg-crimson-100 text-crimson-800 flex items-center justify-center">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-          </div>
-          <div class="text-center">
-            <p class="font-heading font-bold text-crimson-800 text-sm">Your Business?</p>
-            <p class="text-[10px] uppercase tracking-wider text-navy-400 mt-0.5">Join the List</p>
-          </div>
-        </div>
-
+      <!-- Partner Grid (dynamic via Supabase) -->
+      <div id="partners-loading" class="flex items-center gap-3 text-navy-400 py-8">
+        <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+        </svg>
+        <span class="text-sm font-heading font-medium">Loading partners...</span>
       </div>
+      <div id="partners-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-16 hidden"></div>
 
       <!-- Partner Testimonials -->
       <div class="max-w-4xl mx-auto">
@@ -2804,5 +2554,1045 @@
       el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
       observer.observe(el);
     });
+
+    // ── CTA button depth ────────────────────────────────────────────────────
+    document.querySelectorAll('button, a').forEach(el => {
+      const cls = el.className || '';
+      if (cls.includes('bg-crimson') || cls.includes('bg-gold-500')) {
+        el.classList.add('cta-primary');
+      } else if (cls.includes('border-2') && (cls.includes('border-navy') || cls.includes('border-white')) && cls.includes('px-')) {
+        el.classList.add('cta-outline');
+      }
+    });
+
+    // ── Partner data (populated dynamically from Supabase) ───────────────────
+    let _allPartners = [];
+
+    function openPartnerModal(idx) {
+      const p = _allPartners[idx];
+      if (!p) return;
+
+      const modal = document.getElementById('modal-partner');
+      const heroBg = document.getElementById('partner-hero-bg');
+      const logoWrap = document.getElementById('partner-logo-wrap');
+      const sectorEl = document.getElementById('partner-sector');
+      const nameEl = document.getElementById('partner-modal-name');
+      const descEl = document.getElementById('partner-modal-desc');
+      const typesEl = document.getElementById('partner-modal-types');
+      const websiteLink = document.getElementById('partner-modal-website');
+
+      const logo = p.company_logo || (p.company_website ? `https://logo.clearbit.com/${new URL(p.company_website).hostname}` : '');
+      const hero = p.hero_image || '';
+
+      if (hero) heroBg.style.backgroundImage = `url('${hero}')`;
+      const logoBg = p.logo_bg || ((p.company_name || '').toLowerCase().includes('bps') ? '#AC161D' : p.dark_card ? '#000000' : '#ffffff');
+      logoWrap.style.background = logoBg;
+      logoWrap.style.overflow = 'hidden';
+      logoWrap.innerHTML = logo ? `<img src="${logo}" alt="${p.company_name || ''}" class="w-full h-full object-contain p-1.5">` : '';
+      sectorEl.textContent = p.industry || '';
+      nameEl.textContent = p.company_name || '';
+      descEl.textContent = p.description || '';
+
+      const types = (p.partnership_types || '').split(',').map(t => t.trim()).filter(Boolean);
+      typesEl.innerHTML = types.map(t =>
+        `<span class="inline-block bg-white/10 text-white/80 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider border border-white/15">${t}</span>`
+      ).join('');
+
+      if (p.company_website) {
+        websiteLink.href = p.company_website;
+        websiteLink.textContent = `Visit ${p.company_name} →`;
+        websiteLink.style.display = 'inline-flex';
+      } else {
+        websiteLink.style.display = 'none';
+      }
+
+      document.body.style.overflow = 'hidden';
+      modal.style.display = 'flex';
+      modal.offsetHeight;
+      modal.classList.add('active');
+    }
+
+    function closePartnerModal() {
+      const modal = document.getElementById('modal-partner');
+      modal.classList.remove('active');
+      setTimeout(() => { modal.style.display = 'none'; document.body.style.overflow = ''; }, 400);
+    }
+
+    document.getElementById('modal-partner').addEventListener('click', e => {
+      if (e.target.id === 'modal-partner') closePartnerModal();
+    });
+  </script>
+
+  <!-- ── Partner Spotlight Modal ── -->
+  <div id="modal-partner" class="modal-backdrop items-end justify-center md:items-center md:p-6">
+    <div class="modal-content w-full max-w-2xl md:max-h-[88vh] md:rounded-2xl overflow-hidden shadow-2xl flex flex-col bg-navy-950" style="max-height:92vh;">
+
+      <!-- Hero with Ken Burns -->
+      <div class="partner-hero-section">
+        <div id="partner-hero-bg" class="partner-hero-bg ken-burns"></div>
+        <div class="partner-hero-gradient"></div>
+        <button onclick="closePartnerModal()" class="partner-hero-close">
+          <svg class="w-4 h-4" fill="none" stroke="white" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+        <!-- Identity overlay at bottom of hero -->
+        <div class="absolute bottom-0 left-0 right-0 p-6">
+          <div class="flex items-end gap-4">
+            <div id="partner-logo-wrap" class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg overflow-hidden"></div>
+            <div class="flex-1 min-w-0">
+              <p id="partner-sector" class="text-xs uppercase tracking-widest text-gold-400 font-semibold mb-1"></p>
+              <h2 id="partner-modal-name" class="font-heading text-2xl font-black text-white leading-tight" style="text-shadow:0 1px 16px rgba(0,0,0,0.6)"></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="p-6 overflow-y-auto flex-1 space-y-5 bg-navy-950">
+        <p id="partner-modal-desc" class="text-navy-200 leading-relaxed text-sm"></p>
+
+        <div>
+          <p class="text-xs uppercase tracking-widest text-navy-400 font-semibold mb-3">Partnership Types</p>
+          <div id="partner-modal-types" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <div class="pt-2 flex flex-col gap-3">
+          <a id="partner-modal-website" href="#" target="_blank" rel="noopener"
+            class="inline-flex items-center gap-2 text-sm text-navy-300 hover:text-white transition-colors">
+            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+            <span></span>
+          </a>
+          <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')"
+            class="w-full bg-crimson-800 text-white py-4 text-sm font-bold uppercase tracking-wider hover:bg-crimson-700 transition-colors cta-primary">
+            Become a Partner Like This →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WBL Coordinator Floating Button ── -->
+  <button id="wbl-coordinator-btn" onclick="openWblAccess()"
+    title="WBL Coordinator Access"
+    class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-navy-900/80 backdrop-blur text-white border border-white/10 hover:bg-navy-800/90 hover:border-white/20 transition-all shadow-lg hover:shadow-xl flex items-center justify-center group"
+    style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:800;letter-spacing:0.05em;">
+    WBL
+  </button>
+
+  <!-- ── WBL Access Password Modal ── -->
+  <div id="wbl-access-modal" class="fixed inset-0 z-[200] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4" onclick="if(event.target===this)closeWblAccess()">
+    <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden">
+      <div class="bg-navy-900 text-white px-8 py-6 text-center">
+        <div class="w-10 h-10 rounded-full bg-gold-500 flex items-center justify-center mx-auto mb-3"
+             style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:800;color:#000;">WBL</div>
+        <h3 class="font-heading font-bold text-xl mb-1">WBL Coordinator Access</h3>
+        <p class="text-white/50 text-xs uppercase tracking-widest">Batavia High School · BPS 101</p>
+      </div>
+      <div class="px-8 py-8">
+        <form onsubmit="submitWblPassword(event)" class="space-y-4">
+          <input id="wbl-password-input" type="password" placeholder="Enter coordinator password"
+            class="w-full border border-navy-200 px-4 py-3 text-sm font-heading focus:outline-none focus:border-navy-900 transition-colors rounded"
+            autocomplete="off" autofocus>
+          <p id="wbl-password-error" class="text-crimson-800 text-xs font-heading font-semibold hidden">Incorrect password. Try again.</p>
+          <button type="submit"
+            class="w-full bg-navy-900 text-white py-3.5 text-sm font-heading font-bold uppercase tracking-wider hover:bg-navy-800 transition-colors rounded">
+            Unlock →
+          </button>
+        </form>
+        <button onclick="closeWblAccess()" class="w-full mt-3 text-xs text-navy-400 hover:text-navy-700 transition-colors font-heading">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WBL Coordinator Hub Panel ── -->
+  <div id="wbl-hub" class="fixed inset-y-0 right-0 z-[201] w-full max-w-md bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+    <!-- Hub header -->
+    <div class="bg-navy-900 text-white px-6 py-5 flex items-center justify-between flex-shrink-0">
+      <div>
+        <p class="text-xs uppercase tracking-widest font-heading font-semibold opacity-50 mb-0.5">Batavia High School · BPS 101</p>
+        <h3 class="font-heading font-bold text-lg">WBL Coordinator Hub</h3>
+      </div>
+      <button onclick="closeWblHub()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors flex-shrink-0">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Hub content -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-6">
+
+      <!-- Partner One-Pager Documents -->
+      <div>
+        <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400 mb-1">Partner Documents</p>
+        <p class="text-xs text-navy-500 mb-4">Share these with businesses interested in partnering. Each page has a print button.</p>
+        <div class="space-y-2">
+          <a href="partner-job-shadow.html" target="_blank"
+            class="flex items-center justify-between gap-3 border border-navy-100 hover:border-crimson-800 p-4 rounded-lg group transition-all hover:shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-crimson-800 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              </div>
+              <div>
+                <p class="font-heading font-bold text-navy-900 text-sm">Job Shadow</p>
+                <p class="text-xs text-navy-400">One-pager · Printable</p>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-navy-300 group-hover:text-crimson-800 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          </a>
+
+          <a href="partner-guest-speaker.html" target="_blank"
+            class="flex items-center justify-between gap-3 border border-navy-100 p-4 rounded-lg group transition-all hover:shadow-sm" style="--hover-border:#0d9488" onmouseenter="this.style.borderColor='#0d9488'" onmouseleave="this.style.borderColor=''">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#0d9488">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              </div>
+              <div>
+                <p class="font-heading font-bold text-navy-900 text-sm">Guest Speaker</p>
+                <p class="text-xs text-navy-400">One-pager · Printable</p>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-navy-300 flex-shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          </a>
+
+          <a href="partner-mentor-advisor.html" target="_blank"
+            class="flex items-center justify-between gap-3 border border-navy-100 hover:border-gold-500 p-4 rounded-lg group transition-all hover:shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-gold-500 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-navy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+              </div>
+              <div>
+                <p class="font-heading font-bold text-navy-900 text-sm">Mentor / Advisor</p>
+                <p class="text-xs text-navy-400">One-pager · Printable</p>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-navy-300 group-hover:text-gold-600 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          </a>
+
+          <a href="partner-field-experience.html" target="_blank"
+            class="flex items-center justify-between gap-3 bg-navy-900 border border-navy-900 hover:bg-navy-800 p-4 rounded-lg group transition-all hover:shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-gold-500 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-navy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <div>
+                <p class="font-heading font-bold text-white text-sm">Field Experience / Internship</p>
+                <p class="text-xs text-white/40">One-pager · Printable</p>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-white/30 group-hover:text-gold-500 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <hr class="border-navy-100">
+
+      <!-- Placeholder for more -->
+      <div>
+        <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400 mb-3">Quick Links</p>
+        <div class="space-y-2">
+          <a href="https://forms.gle/LKtvgfaYBpTfWMSB9" target="_blank" rel="noopener"
+            class="flex items-center gap-3 text-sm text-navy-600 hover:text-navy-900 transition-colors p-2">
+            <svg class="w-4 h-4 flex-shrink-0 text-navy-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Partner Interest Form
+          </a>
+        </div>
+        <p class="text-xs text-navy-300 mt-4 italic">More documents can be added here over time.</p>
+      </div>
+
+      <!-- Divider -->
+      <hr class="border-navy-100">
+
+      <!-- Partners Management -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400">Partners</p>
+          <button onclick="toggleAddPartnerForm()"
+            class="flex items-center gap-1.5 text-xs font-heading font-bold text-crimson-800 hover:text-crimson-700 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            Add New
+          </button>
+        </div>
+
+        <!-- Add partner form (collapsed) -->
+        <div id="add-partner-form-wrap" class="hidden mb-4">
+          <div class="bg-navy-50 rounded-xl p-4 border border-navy-100">
+            <p id="add-partner-form-title" class="text-xs font-heading font-bold text-navy-700 uppercase tracking-widest mb-3">New Partner</p>
+            <form id="add-partner-form" class="space-y-2.5" onsubmit="submitNewPartner(event)">
+              <input type="hidden" name="_edit_id" value="">
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Company Name *</label>
+                <input name="company_name" required type="text" placeholder="Orbis Design"
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+              </div>
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Website</label>
+                <input name="company_website" type="url" placeholder="https://orbisdesign.com" id="partner-website-input"
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+              </div>
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Logo URL <span class="text-navy-300 font-normal">(auto-fills from website)</span></label>
+                <input name="company_logo" type="url" placeholder="https://logo.clearbit.com/domain.com" id="partner-logo-input"
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+              </div>
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Industry / Sector</label>
+                <select name="industry"
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 bg-white">
+                  <option value="">Select industry...</option>
+                  <option>Agriculture</option>
+                  <option>Arts &amp; Communications</option>
+                  <option>Finance &amp; Business</option>
+                  <option>Food Service</option>
+                  <option>Health Sciences</option>
+                  <option>Human &amp; Public Services</option>
+                  <option>Information Technology</option>
+                  <option>Manufacturing, Engineering &amp; Trades</option>
+                  <option>Nonprofit</option>
+                  <option>Skilled Trades</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Description</label>
+                <textarea name="description" rows="2" placeholder="What this business does..."
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 resize-none"></textarea>
+              </div>
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Partnership Types <span class="text-navy-300 font-normal">(comma-separated)</span></label>
+                <input name="partnership_types" type="text" placeholder="Field Experience Placement, Job Shadow"
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+              </div>
+              <div id="add-partner-error" class="hidden text-xs text-crimson-800 font-heading font-semibold"></div>
+              <div class="flex gap-2">
+                <button type="submit" id="add-partner-submit"
+                  class="flex-1 bg-crimson-800 text-white text-xs font-heading font-bold py-2 rounded-lg hover:bg-crimson-700 transition-colors">
+                  Save Partner
+                </button>
+                <button type="button" onclick="toggleAddPartnerForm()"
+                  class="px-4 text-xs font-heading font-semibold text-navy-500 hover:text-navy-900 border border-navy-200 rounded-lg transition-colors">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Partners list -->
+        <div id="admin-partners-loading" class="text-xs text-navy-400 py-2">Loading...</div>
+        <div id="admin-partners-list" class="hidden space-y-2 max-h-48 overflow-y-auto"></div>
+        <div id="admin-partners-empty" class="hidden text-xs text-navy-300 italic py-2">No partners yet.</div>
+      </div>
+
+      <!-- Divider -->
+      <hr class="border-navy-100">
+
+      <!-- Job Listings Management -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400">Job Listings</p>
+          <button onclick="toggleAddListingForm()"
+            class="flex items-center gap-1.5 text-xs font-heading font-bold text-crimson-800 hover:text-crimson-700 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            Add New
+          </button>
+        </div>
+
+        <!-- Add form (collapsed by default) -->
+        <div id="add-listing-form-wrap" class="hidden mb-4">
+          <div class="bg-navy-50 rounded-xl p-4 border border-navy-100">
+            <p id="add-listing-form-title" class="text-xs font-heading font-bold text-navy-700 uppercase tracking-widest mb-3">New Listing</p>
+            <form id="add-listing-form" class="space-y-2.5" onsubmit="submitNewListing(event)">
+              <input type="hidden" name="_edit_id" value="">
+              <div class="grid grid-cols-2 gap-2">
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Company Name *</label>
+                  <input name="company_name" required type="text" placeholder="Orbis Design"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Role Title *</label>
+                  <input name="role_title" required type="text" placeholder="Marketing Assistant"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Industry / Sector</label>
+                  <select name="industry"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 bg-white">
+                    <option value="">Select industry...</option>
+                    <option>Agriculture</option>
+                    <option>Arts &amp; Communications</option>
+                    <option>Finance &amp; Business</option>
+                    <option>Health Sciences</option>
+                    <option>Human &amp; Public Services</option>
+                    <option>Information Technology</option>
+                    <option>Manufacturing, Engineering &amp; Trades</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Compensation</label>
+                  <input name="compensation" type="text" placeholder="$15/hr or Unpaid"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div>
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Weekly Hours</label>
+                  <input name="weekly_commitment" type="text" placeholder="8–10 hrs/wk"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Work Environment</label>
+                  <input name="work_environment" type="text" placeholder="In-person / Hybrid / Remote"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div>
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Students Requested</label>
+                  <input name="num_students" type="number" min="1" value="1"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div>
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Company Website</label>
+                  <input name="company_website" type="text" placeholder="https://..."
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Company Logo URL</label>
+                  <input name="company_logo" type="text" placeholder="https://res.cloudinary.com/..."
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Mission Statement</label>
+                  <textarea name="mission_statement" rows="2" placeholder="Brief company mission..."
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 resize-none"></textarea>
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Primary Tasks &amp; Responsibilities</label>
+                  <textarea name="tasks" rows="3" placeholder="• Help with social media&#10;• Support front desk..."
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 resize-none"></textarea>
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Top Skills Student Will Develop</label>
+                  <input name="top_skills" type="text" placeholder="Communication, Teamwork, Excel"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                  <p class="text-xs text-navy-400 mt-0.5">Comma-separated</p>
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Student Requirements</label>
+                  <textarea name="student_requirements" rows="2" placeholder="Junior or senior, own transportation..."
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 resize-none"></textarea>
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Specific Requirements</label>
+                  <textarea name="specific_requirements" rows="2" placeholder="Background check, dress code, etc."
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 resize-none"></textarea>
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Ideal Candidate</label>
+                  <textarea name="ideal_candidate" rows="2" placeholder="Self-motivated, curious about healthcare..."
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 resize-none"></textarea>
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Mentor Name</label>
+                  <input name="mentor_name" type="text" placeholder="Jane Smith"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Mentor Email</label>
+                  <input name="mentor_email" type="email" placeholder="jane@company.com"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Direct Application Link</label>
+                  <input name="application_link" type="text" placeholder="https://..."
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Application Instructions</label>
+                  <textarea name="application_instructions" rows="2" placeholder="Send resume to mentor email by..."
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 resize-none"></textarea>
+                </div>
+                <div class="col-span-2">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Other Important Info</label>
+                  <textarea name="other_info" rows="2" placeholder="Any additional details..."
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 resize-none"></textarea>
+                </div>
+              </div>
+
+              <div id="add-listing-error" class="hidden text-xs text-crimson-800 bg-crimson-50 border border-crimson-100 rounded-lg px-3 py-2"></div>
+
+              <div class="flex gap-2 pt-1">
+                <button type="submit" id="add-listing-submit"
+                  class="flex-1 bg-navy-900 text-white py-2.5 text-xs font-heading font-bold uppercase tracking-wider hover:bg-navy-800 transition-colors rounded-lg">
+                  Save Listing
+                </button>
+                <button type="button" onclick="toggleAddListingForm()"
+                  class="px-4 py-2.5 text-xs font-heading font-bold text-navy-500 hover:text-navy-900 transition-colors border border-navy-200 rounded-lg">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Existing listings list -->
+        <div id="admin-listings-loading" class="text-xs text-navy-400 py-3 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+          </svg>
+          Loading listings...
+        </div>
+        <div id="admin-listings-list" class="space-y-2 hidden"></div>
+        <p id="admin-listings-empty" class="hidden text-xs text-navy-400 italic py-2">No listings yet. Add your first one above.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Hub backdrop -->
+  <div id="wbl-hub-backdrop" class="fixed inset-0 z-[200] bg-black/40 hidden" onclick="closeWblHub()"></div>
+
+  <script>
+    function openWblAccess() {
+      if (sessionStorage.getItem('wbl-auth') === '1') {
+        openWblHub();
+        return;
+      }
+      var modal = document.getElementById('wbl-access-modal');
+      modal.style.display = 'flex';
+      modal.classList.remove('hidden');
+      setTimeout(function() {
+        var input = document.getElementById('wbl-password-input');
+        if (input) input.focus();
+      }, 50);
+    }
+
+    function closeWblAccess() {
+      var modal = document.getElementById('wbl-access-modal');
+      modal.style.display = 'none';
+      modal.classList.add('hidden');
+      var err = document.getElementById('wbl-password-error');
+      if (err) err.classList.add('hidden');
+      var input = document.getElementById('wbl-password-input');
+      if (input) input.value = '';
+    }
+
+    function submitWblPassword(e) {
+      e.preventDefault();
+      var input = document.getElementById('wbl-password-input');
+      var err = document.getElementById('wbl-password-error');
+      if (input.value === 'Bulldogs1') {
+        sessionStorage.setItem('wbl-auth', '1');
+        closeWblAccess();
+        openWblHub();
+      } else {
+        err.classList.remove('hidden');
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    function openWblHub() {
+      var hub = document.getElementById('wbl-hub');
+      var backdrop = document.getElementById('wbl-hub-backdrop');
+      backdrop.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(function() {
+        hub.style.transform = 'translateX(0)';
+      });
+    }
+
+    function closeWblHub() {
+      var hub = document.getElementById('wbl-hub');
+      var backdrop = document.getElementById('wbl-hub-backdrop');
+      hub.style.transform = 'translateX(100%)';
+      document.body.style.overflow = '';
+      setTimeout(function() {
+        backdrop.classList.add('hidden');
+      }, 500);
+    }
+
+    // Close hub on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var hub = document.getElementById('wbl-hub');
+        if (hub && hub.style.transform === 'translateX(0px)') closeWblHub();
+        var modal = document.getElementById('wbl-access-modal');
+        if (modal && modal.style.display === 'flex') closeWblAccess();
+      }
+    });
+  </script>
+
+  <!-- ── Supabase Partner & Listing Admin ── -->
+  <script>
+    const SUPABASE_URL  = 'https://bsgrkpykysvqcdqikcym.supabase.co';
+    const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzZ3JrcHlreXN2cWNkcWlrY3ltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MTE5NzUsImV4cCI6MjA5NTA4Nzk3NX0.brdA4f7v0GC89fRXPTVPZV11KIdZxXyCkLTWWsoe0o0';
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const INDUSTRY_COLORS = {
+      'Agriculture':                         'bg-green-100 text-green-800',
+      'Arts & Communications':               'bg-purple-100 text-purple-800',
+      'Finance & Business':                  'bg-blue-100 text-blue-800',
+      'Health Sciences':                     'bg-rose-100 text-rose-800',
+      'Human & Public Services':             'bg-orange-100 text-orange-800',
+      'Information Technology':              'bg-cyan-100 text-cyan-800',
+      'Manufacturing, Engineering & Trades': 'bg-yellow-100 text-yellow-800',
+    };
+
+    function esc(s) {
+      return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ── Public: load and render active listings ──────────────────────────────
+
+    async function loadPublicListings() {
+      const { data, error } = await db
+        .from('job_listings')
+        .select('*')
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+
+      const loading  = document.getElementById('positions-loading');
+      const grid     = document.getElementById('positions-grid');
+      const empty    = document.getElementById('positions-empty');
+      const counter  = document.getElementById('positions-count');
+      const countNum = document.getElementById('positions-count-num');
+
+      loading.classList.add('hidden');
+
+      if (error || !data || data.length === 0) {
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      countNum.textContent = data.length;
+      counter.classList.remove('hidden');
+      grid.classList.remove('hidden');
+      grid.innerHTML = data.map(buildJobCard).join('');
+    }
+
+    function buildJobCard(listing) {
+      const industryClass = INDUSTRY_COLORS[listing.industry] || 'bg-navy-100 text-navy-700';
+      const skills = (listing.top_skills || '')
+        .split(',').map(s => s.trim()).filter(Boolean).slice(0, 4);
+
+      const stats = [
+        listing.compensation    ? `<div class="bg-navy-50 rounded-lg p-2.5"><p class="text-xs text-navy-400 uppercase tracking-widest font-heading mb-0.5">Pay</p><p class="text-sm font-heading font-semibold text-navy-800">${esc(listing.compensation)}</p></div>` : '',
+        listing.weekly_commitment ? `<div class="bg-navy-50 rounded-lg p-2.5"><p class="text-xs text-navy-400 uppercase tracking-widest font-heading mb-0.5">Hours</p><p class="text-sm font-heading font-semibold text-navy-800">${esc(listing.weekly_commitment)}</p></div>` : '',
+        listing.work_environment  ? `<div class="bg-navy-50 rounded-lg p-2.5 col-span-2"><p class="text-xs text-navy-400 uppercase tracking-widest font-heading mb-0.5">Setting</p><p class="text-sm font-heading font-semibold text-navy-800">${esc(listing.work_environment)}</p></div>` : '',
+      ].filter(Boolean).join('');
+
+      const applyBtn = listing.application_link
+        ? `<a href="${esc(listing.application_link)}" target="_blank" rel="noopener noreferrer"
+             class="block w-full bg-crimson-800 text-white text-center py-3 text-sm font-heading font-bold uppercase tracking-wider hover:bg-crimson-700 transition-colors rounded-lg">
+             Apply Now →
+           </a>`
+        : `<a href="https://forms.gle/y4q3agEf7DChagyV8" target="_blank" rel="noopener noreferrer"
+             class="block w-full border-2 border-navy-900 text-navy-900 text-center py-3 text-sm font-heading font-bold uppercase tracking-wider hover:bg-navy-900 hover:text-white transition-colors rounded-lg">
+             Apply Through BHS →
+           </a>`;
+
+      return `
+        <div class="flex flex-col border border-navy-100 rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+          <div class="p-6 flex-1">
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <div class="min-w-0 flex-1">
+                ${listing.industry ? `<span class="inline-block text-xs font-heading font-semibold px-2.5 py-1 rounded-full mb-3 ${industryClass}">${esc(listing.industry)}</span>` : ''}
+                <h3 class="font-heading font-bold text-navy-900 text-lg leading-tight mb-0.5">${esc(listing.role_title)}</h3>
+                <p class="text-sm text-navy-500 font-medium">${esc(listing.company_name)}</p>
+              </div>
+              ${listing.company_logo ? `<img src="${esc(listing.company_logo)}" alt="${esc(listing.company_name)}" class="w-14 h-14 object-contain rounded-lg flex-shrink-0 border border-navy-100 p-1">` : ''}
+            </div>
+            ${stats ? `<div class="grid grid-cols-2 gap-2 mb-4">${stats}</div>` : ''}
+            ${skills.length ? `<div class="flex flex-wrap gap-1.5 mb-4">${skills.map(s => `<span class="text-xs bg-crimson-50 text-crimson-800 border border-crimson-100 px-2 py-0.5 rounded-full font-heading font-medium">${esc(s)}</span>`).join('')}</div>` : ''}
+            ${listing.mission_statement ? `<p class="text-xs text-navy-400 leading-relaxed line-clamp-2">${esc(listing.mission_statement)}</p>` : ''}
+          </div>
+          <div class="px-6 pb-6">${applyBtn}</div>
+        </div>`;
+    }
+
+    // ── Partners: public grid ────────────────────────────────────────────────
+
+    async function loadPartners() {
+      const loading = document.getElementById('partners-loading');
+      const grid    = document.getElementById('partners-grid');
+
+      const { data, error } = await db
+        .from('partners')
+        .select('*')
+        .eq('is_active', true)
+        .order('company_name');
+
+      if (loading) loading.classList.add('hidden');
+      if (error || !data || data.length === 0) return;
+
+      _allPartners = data;
+      if (grid) {
+        grid.innerHTML = data.map((p, i) => buildPartnerCard(p, i)).join('') + buildPartnerCta();
+        grid.classList.remove('hidden');
+      }
+    }
+
+    function buildPartnerCard(p, idx) {
+      const logo = p.company_logo || (p.company_website ? `https://logo.clearbit.com/${new URL(p.company_website).hostname}` : '');
+      const logoBg = p.logo_bg || ((p.company_name || '').toLowerCase().includes('bps') ? '#AC161D' : p.dark_card ? '#000000' : '#f5f5f5');
+      return `
+        <div class="bg-white border border-navy-200 rounded-lg p-5 flex flex-col items-center justify-center min-h-[120px] gap-3 hover:border-crimson-800 hover:shadow-md transition-all group cursor-pointer" onclick="openPartnerModal(${idx})">
+          <div class="w-14 h-14 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0" style="background:${logoBg}">
+            ${logo ? `<img src="${esc(logo)}" alt="${esc(p.company_name)}" class="w-full h-full object-contain p-1.5" onerror="this.parentElement.style.background='#f5f5f5';this.style.display='none'">` : ''}
+          </div>
+          <div class="text-center">
+            <p class="font-heading font-bold text-navy-900 text-sm">${esc(p.company_name)}</p>
+            ${p.industry ? `<p class="text-[10px] uppercase tracking-wider text-navy-400 mt-0.5">${esc(p.industry)}</p>` : ''}
+          </div>
+        </div>`;
+    }
+
+    function buildPartnerCta() {
+      return `
+        <div class="bg-white border-2 border-dashed border-navy-200 rounded-lg p-6 flex flex-col items-center justify-center min-h-[120px] gap-3 hover:border-crimson-800 transition-all cursor-pointer" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')">
+          <div class="w-10 h-10 rounded-lg bg-crimson-100 text-crimson-800 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          </div>
+          <div class="text-center">
+            <p class="font-heading font-bold text-crimson-800 text-sm">Your Business?</p>
+            <p class="text-[10px] uppercase tracking-wider text-navy-400 mt-0.5">Join the List</p>
+          </div>
+        </div>`;
+    }
+
+    // Brandfetch-first, Clearbit-fallback auto-logo on website blur in add-partner form
+    document.addEventListener('DOMContentLoaded', () => {
+      const websiteInput = document.getElementById('partner-website-input');
+      const logoInput    = document.getElementById('partner-logo-input');
+      if (websiteInput && logoInput) {
+        websiteInput.addEventListener('blur', async () => {
+          if (logoInput.value) return;
+          const url = websiteInput.value.trim();
+          if (!url) return;
+          try {
+            const host = new URL(url).hostname.replace(/^www\./, '');
+            const brandfetchUrl = `https://cdn.brandfetch.io/${host}/logo`;
+            const clearbitUrl   = `https://logo.clearbit.com/${host}`;
+            const brandfetchOk  = await new Promise(resolve => {
+              const img = new Image();
+              img.onload  = () => resolve(true);
+              img.onerror = () => resolve(false);
+              img.src = brandfetchUrl;
+            });
+            logoInput.value = brandfetchOk ? brandfetchUrl : clearbitUrl;
+          } catch(e) {}
+        });
+      }
+    });
+
+    // ── Partner admin ─────────────────────────────────────────────────────────
+
+    function toggleAddPartnerForm() {
+      const wrap = document.getElementById('add-partner-form-wrap');
+      const isHidden = wrap.classList.toggle('hidden');
+      if (!isHidden) {
+        setTimeout(() => wrap.querySelector('input[name="company_name"]').focus(), 50);
+      } else {
+        const form = document.getElementById('add-partner-form');
+        form.reset();
+        form.querySelector('input[name="_edit_id"]').value = '';
+        document.getElementById('add-partner-form-title').textContent = 'New Partner';
+        document.getElementById('add-partner-submit').textContent = 'Save Partner';
+      }
+    }
+
+    async function loadAdminPartners() {
+      const loading = document.getElementById('admin-partners-loading');
+      const list    = document.getElementById('admin-partners-list');
+      const empty   = document.getElementById('admin-partners-empty');
+
+      if (loading) loading.classList.remove('hidden');
+      if (list) list.classList.add('hidden');
+      if (empty) empty.classList.add('hidden');
+
+      const { data, error } = await db
+        .from('partners')
+        .select('id, company_name, industry, is_active, created_at')
+        .order('company_name');
+
+      if (loading) loading.classList.add('hidden');
+
+      if (error || !data || data.length === 0) {
+        if (empty) empty.classList.remove('hidden');
+        return;
+      }
+
+      if (list) {
+        list.classList.remove('hidden');
+        list.innerHTML = data.map(buildAdminPartnerItem).join('');
+      }
+    }
+
+    function buildAdminPartnerItem(p) {
+      const eyeOn  = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>';
+      const eyeOff = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>';
+      const safeName = esc(p.company_name).replace(/'/g, "\\'");
+      return `
+        <div class="border border-navy-100 rounded-lg p-3 ${p.is_active ? '' : 'opacity-50'}">
+          <div class="flex items-start justify-between gap-2 mb-1">
+            <div class="min-w-0 flex-1">
+              <p class="font-heading font-bold text-navy-900 text-xs truncate">${esc(p.company_name)}</p>
+              ${p.industry ? `<p class="text-xs text-navy-400 truncate">${esc(p.industry)}</p>` : ''}
+            </div>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <button onclick="editPartner('${p.id}')"
+                title="Edit partner"
+                class="w-7 h-7 rounded bg-navy-50 text-navy-600 hover:bg-navy-100 flex items-center justify-center transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+              </button>
+              <button onclick="togglePartnerActive('${p.id}', ${p.is_active})"
+                title="${p.is_active ? 'Hide from site' : 'Show on site'}"
+                class="w-7 h-7 rounded flex items-center justify-center transition-colors ${p.is_active ? 'bg-green-50 text-green-600 hover:bg-green-100' : 'bg-navy-100 text-navy-400 hover:bg-navy-200'}">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">${p.is_active ? eyeOn : eyeOff}</svg>
+              </button>
+              <button onclick="deletePartner('${p.id}', '${safeName}')"
+                title="Delete partner"
+                class="w-7 h-7 rounded bg-crimson-50 text-crimson-800 hover:bg-crimson-100 flex items-center justify-center transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <span class="text-xs font-heading font-semibold ${p.is_active ? 'text-green-600' : 'text-navy-400'}">
+            ${p.is_active ? '● Live' : '○ Hidden'}
+          </span>
+        </div>`;
+    }
+
+    async function editPartner(id) {
+      const { data, error } = await db.from('partners').select('*').eq('id', id).single();
+      if (error || !data) return;
+      const form = document.getElementById('add-partner-form');
+      const wrap = document.getElementById('add-partner-form-wrap');
+      Object.keys(data).forEach(k => {
+        const el = form.elements[k];
+        if (el) el.value = data[k] ?? '';
+      });
+      form.querySelector('input[name="_edit_id"]').value = id;
+      document.getElementById('add-partner-form-title').textContent = 'Edit Partner';
+      document.getElementById('add-partner-submit').textContent = 'Update Partner';
+      wrap.classList.remove('hidden');
+      setTimeout(() => form.querySelector('input[name="company_name"]').focus(), 50);
+    }
+
+    async function submitNewPartner(e) {
+      e.preventDefault();
+      const form   = e.target;
+      const btn    = document.getElementById('add-partner-submit');
+      const errEl  = document.getElementById('add-partner-error');
+
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+      errEl.classList.add('hidden');
+
+      const raw = Object.fromEntries(new FormData(form));
+      const editId = raw._edit_id;
+      delete raw._edit_id;
+      Object.keys(raw).forEach(k => { if (raw[k] === '' || raw[k] === null) delete raw[k]; });
+
+      const { error } = editId
+        ? await db.from('partners').update(raw).eq('id', editId)
+        : await db.from('partners').insert([raw]);
+
+      if (error) {
+        errEl.textContent = 'Error: ' + error.message;
+        errEl.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = editId ? 'Update Partner' : 'Save Partner';
+        return;
+      }
+
+      form.reset();
+      form.querySelector('input[name="_edit_id"]').value = '';
+      document.getElementById('add-partner-form-title').textContent = 'New Partner';
+      toggleAddPartnerForm();
+      loadAdminPartners();
+      loadPartners();
+      btn.disabled = false;
+      btn.textContent = 'Save Partner';
+    }
+
+    async function togglePartnerActive(id, current) {
+      await db.from('partners').update({ is_active: !current }).eq('id', id);
+      loadAdminPartners();
+      loadPartners();
+    }
+
+    async function deletePartner(id, name) {
+      if (!confirm('Delete "' + name + '"? This cannot be undone.')) return;
+      await db.from('partners').delete().eq('id', id);
+      loadAdminPartners();
+      loadPartners();
+    }
+
+    // ── Admin: manage listings inside WBL hub ────────────────────────────────
+
+    function toggleAddListingForm() {
+      const wrap = document.getElementById('add-listing-form-wrap');
+      const isHidden = wrap.classList.toggle('hidden');
+      if (!isHidden) {
+        setTimeout(() => wrap.querySelector('input[name="company_name"]').focus(), 50);
+      } else {
+        const form = document.getElementById('add-listing-form');
+        form.reset();
+        form.querySelector('input[name="_edit_id"]').value = '';
+        document.getElementById('add-listing-form-title').textContent = 'New Listing';
+        document.getElementById('add-listing-submit').textContent = 'Save Listing';
+      }
+    }
+
+    async function loadAdminListings() {
+      const loading = document.getElementById('admin-listings-loading');
+      const list    = document.getElementById('admin-listings-list');
+      const empty   = document.getElementById('admin-listings-empty');
+
+      loading.classList.remove('hidden');
+      list.classList.add('hidden');
+      empty.classList.add('hidden');
+
+      const { data, error } = await db
+        .from('job_listings')
+        .select('id, company_name, role_title, is_active, created_at')
+        .order('created_at', { ascending: false });
+
+      loading.classList.add('hidden');
+
+      if (error || !data || data.length === 0) {
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      list.classList.remove('hidden');
+      list.innerHTML = data.map(buildAdminItem).join('');
+    }
+
+    function buildAdminItem(listing) {
+      const eyeOn  = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>';
+      const eyeOff = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>';
+      const safeName = esc(listing.company_name).replace(/'/g, "\\'");
+      return `
+        <div class="border border-navy-100 rounded-lg p-3 ${listing.is_active ? '' : 'opacity-50'}">
+          <div class="flex items-start justify-between gap-2 mb-1">
+            <div class="min-w-0 flex-1">
+              <p class="font-heading font-bold text-navy-900 text-xs truncate">${esc(listing.role_title)}</p>
+              <p class="text-xs text-navy-400 truncate">${esc(listing.company_name)}</p>
+            </div>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <button onclick="editListing('${listing.id}')"
+                title="Edit listing"
+                class="w-7 h-7 rounded bg-navy-50 text-navy-600 hover:bg-navy-100 flex items-center justify-center transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+              </button>
+              <button onclick="toggleListingActive('${listing.id}', ${listing.is_active})"
+                title="${listing.is_active ? 'Hide from site' : 'Show on site'}"
+                class="w-7 h-7 rounded flex items-center justify-center transition-colors ${listing.is_active ? 'bg-green-50 text-green-600 hover:bg-green-100' : 'bg-navy-100 text-navy-400 hover:bg-navy-200'}">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">${listing.is_active ? eyeOn : eyeOff}</svg>
+              </button>
+              <button onclick="deleteListing('${listing.id}', '${safeName}')"
+                title="Delete listing"
+                class="w-7 h-7 rounded bg-crimson-50 text-crimson-800 hover:bg-crimson-100 flex items-center justify-center transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <span class="text-xs font-heading font-semibold ${listing.is_active ? 'text-green-600' : 'text-navy-400'}">
+            ${listing.is_active ? '● Live' : '○ Hidden'}
+          </span>
+        </div>`;
+    }
+
+    async function editListing(id) {
+      const { data, error } = await db.from('job_listings').select('*').eq('id', id).single();
+      if (error || !data) return;
+      const form = document.getElementById('add-listing-form');
+      const wrap = document.getElementById('add-listing-form-wrap');
+      Object.keys(data).forEach(k => {
+        const el = form.elements[k];
+        if (el) el.value = data[k] ?? '';
+      });
+      form.querySelector('input[name="_edit_id"]').value = id;
+      document.getElementById('add-listing-form-title').textContent = 'Edit Listing';
+      document.getElementById('add-listing-submit').textContent = 'Update Listing';
+      wrap.classList.remove('hidden');
+      setTimeout(() => form.querySelector('input[name="company_name"]').focus(), 50);
+    }
+
+    async function submitNewListing(e) {
+      e.preventDefault();
+      const form   = e.target;
+      const btn    = document.getElementById('add-listing-submit');
+      const errEl  = document.getElementById('add-listing-error');
+
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+      errEl.classList.add('hidden');
+
+      const raw = Object.fromEntries(new FormData(form));
+      const editId = raw._edit_id;
+      delete raw._edit_id;
+      if (raw.num_students) raw.num_students = parseInt(raw.num_students) || 1;
+      Object.keys(raw).forEach(k => { if (raw[k] === '' || raw[k] === null) delete raw[k]; });
+
+      const { error } = editId
+        ? await db.from('job_listings').update(raw).eq('id', editId)
+        : await db.from('job_listings').insert([raw]);
+
+      if (error) {
+        errEl.textContent = 'Error: ' + error.message;
+        errEl.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = editId ? 'Update Listing' : 'Save Listing';
+        return;
+      }
+
+      form.reset();
+      form.querySelector('input[name="_edit_id"]').value = '';
+      document.getElementById('add-listing-form-title').textContent = 'New Listing';
+      toggleAddListingForm();
+      loadAdminListings();
+      btn.disabled = false;
+      btn.textContent = 'Save Listing';
+    }
+
+    async function toggleListingActive(id, current) {
+      await db.from('job_listings').update({ is_active: !current }).eq('id', id);
+      loadAdminListings();
+    }
+
+    async function deleteListing(id, name) {
+      if (!confirm('Delete the listing for "' + name + '"? This cannot be undone.')) return;
+      await db.from('job_listings').delete().eq('id', id);
+      loadAdminListings();
+    }
+
+    // Load partner grid on page load
+    loadPartners();
+
+    // Reload admin panels every time the hub opens
+    (function() {
+      var _orig = window.openWblHub;
+      window.openWblHub = function() {
+        if (_orig) _orig();
+        loadAdminPartners();
+        loadAdminListings();
+      };
+    })();
   </script>
 
