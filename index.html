@@ -2926,7 +2926,7 @@
                     class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 bg-white">
                     <option value="">Select industry...</option>
                     <option>Agriculture</option>
-                    <option>Arts &amp; Communications</option>
+                    <option>Arts &amp; Communication</option>
                     <option>Finance &amp; Business</option>
                     <option>Health Sciences</option>
                     <option>Human &amp; Public Services</option>
@@ -3465,8 +3465,9 @@
 
       const { data, error } = await db
         .from('job_listings')
-        .select('id, company_name, role_title, is_active, created_at')
-        .order('created_at', { ascending: false });
+        .select('id, company_name, role_title, is_active, industry, created_at')
+        .order('industry',      { ascending: true })
+        .order('company_name',  { ascending: true });
 
       loading.classList.add('hidden');
 
@@ -3476,7 +3477,42 @@
       }
 
       list.classList.remove('hidden');
-      list.innerHTML = data.map(buildAdminItem).join('');
+      list.innerHTML = renderGroupedListings(data);
+    }
+
+    function renderGroupedListings(data) {
+      const ORDER = [
+        'Agriculture',
+        'Arts & Communication','Arts & Communications',
+        'Finance & Business',
+        'Health Sciences',
+        'Human & Public Services',
+        'Information Technology',
+        'Manufacturing, Engineering & Trades',
+      ];
+      const groups = {};
+      data.forEach(l => {
+        const key = l.industry || 'Uncategorized';
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(l);
+      });
+      const keys = Object.keys(groups).sort((a, b) => {
+        const ia = ORDER.indexOf(a), ib = ORDER.indexOf(b);
+        if (ia >= 0 && ib >= 0) return ia - ib;
+        if (ia >= 0) return -1;
+        if (ib >= 0) return 1;
+        return a.localeCompare(b);
+      });
+      return keys.map(industry => `
+        <details open class="mb-2">
+          <summary class="flex items-center justify-between cursor-pointer select-none py-1.5 px-2 bg-navy-100 rounded-md hover:bg-navy-200 transition-colors" style="list-style:none;-webkit-appearance:none">
+            <span class="text-xs font-heading font-bold text-navy-700 uppercase tracking-widest">${esc(industry)}</span>
+            <span class="bg-white text-navy-500 text-xs font-bold px-1.5 py-0.5 rounded-full border border-navy-200 ml-2">${groups[industry].length}</span>
+          </summary>
+          <div class="mt-1.5 space-y-1.5 pl-2 border-l-2 border-navy-100">
+            ${groups[industry].map(buildAdminItem).join('')}
+          </div>
+        </details>`).join('');
     }
 
     function buildAdminItem(listing) {
