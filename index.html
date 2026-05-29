@@ -2921,18 +2921,16 @@
                     class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
                 </div>
                 <div class="col-span-2">
-                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Industry / Sector</label>
-                  <select name="industry"
-                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 bg-white">
-                    <option value="">Select industry...</option>
-                    <option>Agriculture</option>
-                    <option>Arts &amp; Communication</option>
-                    <option>Finance &amp; Business</option>
-                    <option>Health Sciences</option>
-                    <option>Human &amp; Public Services</option>
-                    <option>Information Technology</option>
-                    <option>Manufacturing, Engineering &amp; Trades</option>
-                  </select>
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Industry / Sector <span class="text-navy-400 font-normal">(select all that apply)</span></label>
+                  <div class="flex flex-wrap gap-1.5">
+                    <label class="inline-flex items-center px-2.5 py-1 rounded-full border border-navy-200 text-xs font-medium text-navy-600 cursor-pointer hover:border-crimson-800 transition-colors has-[:checked]:bg-crimson-800 has-[:checked]:text-white has-[:checked]:border-crimson-800"><input type="checkbox" name="industry_multi" value="Agriculture" class="sr-only">Agriculture</label>
+                    <label class="inline-flex items-center px-2.5 py-1 rounded-full border border-navy-200 text-xs font-medium text-navy-600 cursor-pointer hover:border-crimson-800 transition-colors has-[:checked]:bg-crimson-800 has-[:checked]:text-white has-[:checked]:border-crimson-800"><input type="checkbox" name="industry_multi" value="Arts &amp; Communication" class="sr-only">Arts &amp; Communication</label>
+                    <label class="inline-flex items-center px-2.5 py-1 rounded-full border border-navy-200 text-xs font-medium text-navy-600 cursor-pointer hover:border-crimson-800 transition-colors has-[:checked]:bg-crimson-800 has-[:checked]:text-white has-[:checked]:border-crimson-800"><input type="checkbox" name="industry_multi" value="Finance &amp; Business" class="sr-only">Finance &amp; Business</label>
+                    <label class="inline-flex items-center px-2.5 py-1 rounded-full border border-navy-200 text-xs font-medium text-navy-600 cursor-pointer hover:border-crimson-800 transition-colors has-[:checked]:bg-crimson-800 has-[:checked]:text-white has-[:checked]:border-crimson-800"><input type="checkbox" name="industry_multi" value="Health Sciences" class="sr-only">Health Sciences</label>
+                    <label class="inline-flex items-center px-2.5 py-1 rounded-full border border-navy-200 text-xs font-medium text-navy-600 cursor-pointer hover:border-crimson-800 transition-colors has-[:checked]:bg-crimson-800 has-[:checked]:text-white has-[:checked]:border-crimson-800"><input type="checkbox" name="industry_multi" value="Human &amp; Public Services" class="sr-only">Human &amp; Public Services</label>
+                    <label class="inline-flex items-center px-2.5 py-1 rounded-full border border-navy-200 text-xs font-medium text-navy-600 cursor-pointer hover:border-crimson-800 transition-colors has-[:checked]:bg-crimson-800 has-[:checked]:text-white has-[:checked]:border-crimson-800"><input type="checkbox" name="industry_multi" value="Information Technology" class="sr-only">Information Technology</label>
+                    <label class="inline-flex items-center px-2.5 py-1 rounded-full border border-navy-200 text-xs font-medium text-navy-600 cursor-pointer hover:border-crimson-800 transition-colors has-[:checked]:bg-crimson-800 has-[:checked]:text-white has-[:checked]:border-crimson-800"><input type="checkbox" name="industry_multi" value="Manufacturing, Engineering &amp; Trades" class="sr-only">Manufacturing &amp; Trades</label>
+                  </div>
                 </div>
                 <div>
                   <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Compensation</label>
@@ -2960,9 +2958,27 @@
                     class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
                 </div>
                 <div class="col-span-2">
-                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Company Logo URL</label>
-                  <input name="company_logo" type="text" placeholder="https://res.cloudinary.com/..."
-                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Company Logo</label>
+                  <div id="listing-logo-drop-zone"
+                    class="border-2 border-dashed border-navy-200 rounded-lg p-3 text-center cursor-pointer hover:border-crimson-800 transition-colors"
+                    onclick="document.getElementById('listing-logo-file-input').click()"
+                    ondragover="event.preventDefault();this.classList.add('border-crimson-800','bg-crimson-50')"
+                    ondragleave="this.classList.remove('border-crimson-800','bg-crimson-50')"
+                    ondrop="handleListingLogoDrop(event)">
+                    <input type="file" id="listing-logo-file-input" accept="image/*" class="hidden" onchange="handleListingLogoFile(this.files[0])">
+                    <div id="listing-logo-preview-wrap" class="hidden mb-2">
+                      <img id="listing-logo-preview-img" src="" alt="" class="h-10 max-w-[140px] object-contain mx-auto rounded">
+                    </div>
+                    <div id="listing-logo-drop-hint" class="flex items-center justify-center gap-1.5 text-navy-400 text-xs">
+                      <svg class="w-4 h-4 text-navy-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                      Drop image or <span class="text-crimson-800 font-medium ml-0.5">click to upload</span>
+                    </div>
+                    <p id="listing-logo-upload-status" class="text-xs mt-1 hidden"></p>
+                  </div>
+                  <input type="text" name="company_logo" id="listing-logo-url-input"
+                    placeholder="or paste a logo URL directly"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 mt-1.5"
+                    oninput="if(this.value.startsWith('http'))showListingLogoPreview(this.value)">
                 </div>
                 <div class="col-span-2">
                   <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Mission Statement</label>
@@ -3451,6 +3467,10 @@
         form.querySelector('input[name="_edit_id"]').value = '';
         document.getElementById('add-listing-form-title').textContent = 'New Listing';
         document.getElementById('add-listing-submit').textContent = 'Save Listing';
+        document.getElementById('listing-logo-preview-wrap').classList.add('hidden');
+        document.getElementById('listing-logo-drop-hint').classList.remove('hidden');
+        document.getElementById('listing-logo-upload-status').classList.add('hidden');
+        document.getElementById('listing-logo-file-input').value = '';
       }
     }
 
@@ -3561,13 +3581,70 @@
       const wrap = document.getElementById('add-listing-form-wrap');
       Object.keys(data).forEach(k => {
         const el = form.elements[k];
-        if (el) el.value = data[k] ?? '';
+        if (el && el.type !== 'checkbox') el.value = data[k] ?? '';
       });
+      // Restore industry checkboxes
+      const savedSectors = (data.industry || '').split(',').map(s => s.trim());
+      form.querySelectorAll('[name="industry_multi"]').forEach(cb => {
+        cb.checked = savedSectors.includes(cb.value);
+      });
+      // Restore logo preview
+      if (data.company_logo) showListingLogoPreview(data.company_logo);
       form.querySelector('input[name="_edit_id"]').value = id;
       document.getElementById('add-listing-form-title').textContent = 'Edit Listing';
       document.getElementById('add-listing-submit').textContent = 'Update Listing';
       wrap.classList.remove('hidden');
       setTimeout(() => form.querySelector('input[name="company_name"]').focus(), 50);
+    }
+
+    const _CLDNAME   = 'dikkdclum';
+    const _CLDPRESET = 'wbl_uploads';
+
+    function showListingLogoPreview(url) {
+      const img  = document.getElementById('listing-logo-preview-img');
+      const wrap = document.getElementById('listing-logo-preview-wrap');
+      const hint = document.getElementById('listing-logo-drop-hint');
+      img.src = url;
+      img.onload  = () => { wrap.classList.remove('hidden'); hint.classList.add('hidden'); };
+      img.onerror = () => { wrap.classList.add('hidden');    hint.classList.remove('hidden'); };
+    }
+
+    async function uploadListingLogo(file) {
+      const statusEl = document.getElementById('listing-logo-upload-status');
+      statusEl.textContent = 'Uploading…';
+      statusEl.className = 'text-xs mt-1 text-navy-500';
+      statusEl.classList.remove('hidden');
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('upload_preset', _CLDPRESET);
+      fd.append('folder', 'wbl/logos');
+      try {
+        const res  = await fetch(`https://api.cloudinary.com/v1_1/${_CLDNAME}/image/upload`, { method: 'POST', body: fd });
+        const json = await res.json();
+        if (json.secure_url) {
+          document.getElementById('listing-logo-url-input').value = json.secure_url;
+          showListingLogoPreview(json.secure_url);
+          statusEl.textContent = '✓ Uploaded';
+          statusEl.classList.replace('text-navy-500', 'text-green-600');
+          setTimeout(() => statusEl.classList.add('hidden'), 2000);
+        } else {
+          throw new Error(json.error?.message || 'Upload failed');
+        }
+      } catch (err) {
+        statusEl.textContent = 'Upload failed — paste a URL below instead';
+        statusEl.classList.replace('text-navy-500', 'text-red-600');
+      }
+    }
+
+    function handleListingLogoDrop(e) {
+      e.preventDefault();
+      document.getElementById('listing-logo-drop-zone').classList.remove('border-crimson-800', 'bg-crimson-50');
+      const file = e.dataTransfer.files[0];
+      if (file?.type.startsWith('image/')) uploadListingLogo(file);
+    }
+
+    function handleListingLogoFile(file) {
+      if (file?.type.startsWith('image/')) uploadListingLogo(file);
     }
 
     async function submitNewListing(e) {
@@ -3580,9 +3657,12 @@
       btn.textContent = 'Saving...';
       errEl.classList.add('hidden');
 
+      const industryVals = [...form.querySelectorAll('[name="industry_multi"]:checked')].map(el => el.value);
       const raw = Object.fromEntries(new FormData(form));
       const editId = raw._edit_id;
       delete raw._edit_id;
+      delete raw.industry_multi;
+      if (industryVals.length) raw.industry = industryVals.join(', ');
       if (raw.num_students) raw.num_students = parseInt(raw.num_students) || 1;
       Object.keys(raw).forEach(k => { if (raw[k] === '' || raw[k] === null) delete raw[k]; });
 
