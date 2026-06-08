@@ -2846,10 +2846,6 @@
               class="text-xs font-heading font-bold text-navy-400 hover:text-navy-600 transition-colors">
               Normalize All
             </button>
-            <button onclick="resetGeminiKey();toggleAddListingForm()"
-              class="text-xs font-heading font-bold text-navy-400 hover:text-navy-600 transition-colors">
-              Reset AI Key
-            </button>
             <button onclick="toggleAddListingForm()"
               class="flex items-center gap-1.5 text-xs font-heading font-bold text-crimson-800 hover:text-crimson-700 transition-colors">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3629,7 +3625,6 @@
       try {
         cleaned = await cleanListingWithAI(raw);
       } catch (err) {
-        if (err.message === 'No API key set') return;
         showAIFailedUI(raw, editId, btn, errEl, form, err.message);
         return;
       }
@@ -3738,16 +3733,10 @@
       errEl.style.borderColor = '';
       errEl.innerHTML = `
         <p style="font-weight:700;margin-bottom:.4rem;">⚠️ AI cleanup failed — <span style="font-weight:400;">${reason}</span></p>
-        <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-          <button type="button" id="save-anyway-btn"
-            style="background:#AC161D;color:#fff;border:none;border-radius:.375rem;padding:.375rem .75rem;font-size:.7rem;font-weight:800;font-family:Montserrat,sans-serif;text-transform:uppercase;letter-spacing:.05em;cursor:pointer;">
-            Save Without AI
-          </button>
-          <button type="button" onclick="resetGeminiKey()"
-            style="background:#fff;color:#374151;border:1px solid #d1d5db;border-radius:.375rem;padding:.375rem .75rem;font-size:.7rem;font-weight:700;font-family:Montserrat,sans-serif;cursor:pointer;">
-            Reset API Key
-          </button>
-        </div>`;
+        <button type="button" id="save-anyway-btn"
+          style="background:#AC161D;color:#fff;border:none;border-radius:.375rem;padding:.375rem .75rem;font-size:.7rem;font-weight:800;font-family:Montserrat,sans-serif;text-transform:uppercase;letter-spacing:.05em;cursor:pointer;">
+          Save Without AI
+        </button>`;
       btn.disabled = false;
       btn.textContent = 'Save Listing';
       document.getElementById('save-anyway-btn').addEventListener('click', async () => {
@@ -3758,105 +3747,24 @@
       });
     }
 
-    function resetGeminiKey() {
-      localStorage.removeItem('wbl_gemini_key');
-      const btn = document.getElementById('add-listing-submit');
-      showGeminiKeyUI(btn);
-    }
-
-    function showGeminiKeyUI(btn) {
-      const errEl = document.getElementById('add-listing-error');
-      errEl.classList.remove('hidden');
-      errEl.innerHTML = `
-        <p style="font-weight:700;margin-bottom:.4rem;">🔑 Set your Gemini API key to enable AI cleanup (saved once in your browser):</p>
-        <div style="display:flex;gap:.5rem;align-items:center;">
-          <input id="gemini-key-input" type="password" placeholder="Paste API key here..." autocomplete="off"
-            style="flex:1;border:1px solid #fca5a5;border-radius:.375rem;padding:.375rem .625rem;font-size:.75rem;outline:none;">
-          <button type="button" onclick="saveGeminiKey()"
-            style="background:#AC161D;color:#fff;border:none;border-radius:.375rem;padding:.375rem .75rem;font-size:.7rem;font-weight:800;font-family:Montserrat,sans-serif;text-transform:uppercase;letter-spacing:.05em;cursor:pointer;white-space:nowrap;">
-            Save Key
-          </button>
-        </div>
-        <p style="margin-top:.35rem;font-size:.65rem;color:#9ca3af;">After saving, click <strong>Save Listing</strong> again to run AI cleanup.</p>`;
-      btn.disabled = false;
-      btn.textContent = 'Save Listing';
-    }
-
-    function saveGeminiKey() {
-      const input = document.getElementById('gemini-key-input');
-      const key = (input?.value || '').trim();
-      if (!key) return;
-      localStorage.setItem('wbl_gemini_key', key);
-      const errEl = document.getElementById('add-listing-error');
-      errEl.innerHTML = '✓ API key saved! Click <strong>Save Listing</strong> to run AI cleanup.';
-      errEl.style.color = '#166534';
-      errEl.style.background = '#f0fdf4';
-      errEl.style.borderColor = '#bbf7d0';
-    }
-
     async function cleanListingWithAI(raw) {
-      let key = localStorage.getItem('wbl_gemini_key');
-      if (!key) {
-        const btn = document.getElementById('add-listing-submit');
-        showGeminiKeyUI(btn);
-        throw new Error('No API key set');
-      }
-      key = key.trim();
-
       const TEXT_FIELDS = ['mission_statement','role_title','tasks','top_skills','student_requirements','specific_requirements','ideal_candidate','application_instructions','other_info'];
       const input = {};
       TEXT_FIELDS.forEach(k => { if (raw[k]) input[k] = raw[k]; });
       if (!Object.keys(input).length) return {};
 
-      const aiPrompt = `You are cleaning up job listing content for a high school Work-Based Learning program.
-
-Rules:
-- Fix grammar, spelling, capitalization, and punctuation throughout
-- "role_title": proper Title Case (e.g. "Marketing Intern")
-- "mission_statement": polished 1–2 sentence paragraph, professional tone
-- "tasks": rewrite as parallel gerund phrases (e.g. "- Assisting with..."), one per line, each starting with "- "
-- "top_skills": one skill per line starting with "- ", concise noun phrases
-- "ideal_candidate": 2–3 clear, professional sentences; approachable for high school students
-- "student_requirements" / "specific_requirements": clean up phrasing, fix grammar
-- "application_instructions": clean professional sentences
-- "other_info": fix grammar and punctuation
-- Do NOT alter company names, email addresses, URLs, dollar amounts, or specific times
-
-Input:
-${JSON.stringify(input, null, 2)}
-
-Return ONLY valid JSON with the same field names. No markdown, no explanation.`;
-
-      // AIzaSy... keys use ?key= param; OAuth tokens (AQ., ya29.) use Bearer header
-      const isApiKey = key.startsWith('AIza');
-      const url = isApiKey
-        ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`
-        : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
-      const headers = { 'Content-Type': 'application/json' };
-      if (!isApiKey) headers['Authorization'] = `Bearer ${key}`;
-
-      const res = await fetch(url, {
+      const res = await fetch('/.netlify/functions/clean-listing', {
         method: 'POST',
-        headers,
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: aiPrompt }] }],
-          generationConfig: { temperature: 0.2, maxOutputTokens: 1500 }
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input)
       });
+
       if (!res.ok) {
-        const body = await res.text();
-        if (res.status === 401 || res.status === 403) localStorage.removeItem('wbl_gemini_key');
-        throw new Error(`Gemini ${res.status} — ${body.slice(0, 100)}`);
+        const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+        throw new Error(err.error || `HTTP ${res.status}`);
       }
-      const data = await res.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-      const match = text.match(/\{[\s\S]*\}/);
-      if (!match) throw new Error('No JSON in Gemini response');
-      // Only return known text fields — never allow AI to overwrite factual fields
-      const result = JSON.parse(match[0]);
-      const safe = {};
-      TEXT_FIELDS.forEach(k => { if (result[k]) safe[k] = result[k]; });
-      return safe;
+
+      return await res.json();
     }
 
     function showAIPreviewModal(original, cleaned, onConfirm) {
