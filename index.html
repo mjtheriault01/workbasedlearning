@@ -3657,12 +3657,42 @@
       btn.textContent = 'Save Listing';
     }
 
+    function showGeminiKeyUI(btn) {
+      const errEl = document.getElementById('add-listing-error');
+      errEl.classList.remove('hidden');
+      errEl.innerHTML = `
+        <p style="font-weight:700;margin-bottom:.4rem;">🔑 Set your Gemini API key to enable AI cleanup (saved once in your browser):</p>
+        <div style="display:flex;gap:.5rem;align-items:center;">
+          <input id="gemini-key-input" type="password" placeholder="Paste API key here..." autocomplete="off"
+            style="flex:1;border:1px solid #fca5a5;border-radius:.375rem;padding:.375rem .625rem;font-size:.75rem;outline:none;">
+          <button type="button" onclick="saveGeminiKey()"
+            style="background:#AC161D;color:#fff;border:none;border-radius:.375rem;padding:.375rem .75rem;font-size:.7rem;font-weight:800;font-family:Montserrat,sans-serif;text-transform:uppercase;letter-spacing:.05em;cursor:pointer;white-space:nowrap;">
+            Save Key
+          </button>
+        </div>
+        <p style="margin-top:.35rem;font-size:.65rem;color:#9ca3af;">After saving, click <strong>Save Listing</strong> again to run AI cleanup.</p>`;
+      btn.disabled = false;
+      btn.textContent = 'Save Listing';
+    }
+
+    function saveGeminiKey() {
+      const input = document.getElementById('gemini-key-input');
+      const key = (input?.value || '').trim();
+      if (!key) return;
+      localStorage.setItem('wbl_gemini_key', key);
+      const errEl = document.getElementById('add-listing-error');
+      errEl.innerHTML = '✓ API key saved! Click <strong>Save Listing</strong> to run AI cleanup.';
+      errEl.style.color = '#166534';
+      errEl.style.background = '#f0fdf4';
+      errEl.style.borderColor = '#bbf7d0';
+    }
+
     async function cleanListingWithAI(raw) {
       let key = localStorage.getItem('wbl_gemini_key');
       if (!key) {
-        key = prompt('Paste your Gemini API key to enable AI listing cleanup (saved locally, one-time):');
-        if (!key || !key.trim()) throw new Error('No API key');
-        localStorage.setItem('wbl_gemini_key', key.trim());
+        const btn = document.getElementById('add-listing-submit');
+        showGeminiKeyUI(btn);
+        throw new Error('No API key set');
       }
       key = key.trim();
 
