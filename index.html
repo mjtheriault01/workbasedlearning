@@ -2841,13 +2841,23 @@
       <div>
         <div class="flex items-center justify-between mb-3">
           <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400">Job Listings</p>
-          <button onclick="toggleAddListingForm()"
-            class="flex items-center gap-1.5 text-xs font-heading font-bold text-crimson-800 hover:text-crimson-700 transition-colors">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
-            </svg>
-            Add New
-          </button>
+          <div class="flex items-center gap-3">
+            <button id="normalize-all-btn" onclick="normalizeAllListings()"
+              class="text-xs font-heading font-bold text-navy-400 hover:text-navy-600 transition-colors">
+              Normalize All
+            </button>
+            <button onclick="resetGeminiKey();toggleAddListingForm()"
+              class="text-xs font-heading font-bold text-navy-400 hover:text-navy-600 transition-colors">
+              Reset AI Key
+            </button>
+            <button onclick="toggleAddListingForm()"
+              class="flex items-center gap-1.5 text-xs font-heading font-bold text-crimson-800 hover:text-crimson-700 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+              </svg>
+              Add New
+            </button>
+          </div>
         </div>
 
         <!-- Add form (collapsed by default) -->
@@ -3613,12 +3623,15 @@
       if (raw.num_students) raw.num_students = parseInt(raw.num_students) || 1;
       Object.keys(raw).forEach(k => { if (raw[k] === '' || raw[k] === null) delete raw[k]; });
 
+      normalizeListingFields(raw);
+
       let cleaned = {};
       try {
         cleaned = await cleanListingWithAI(raw);
       } catch (err) {
-        if (err.message === 'No API key set') return; // key UI is showing — stay open
-        console.warn('AI cleanup skipped:', err.message);
+        if (err.message === 'No API key set') return;
+        showAIFailedUI(raw, editId, btn, errEl, form, err.message);
+        return;
       }
 
       const changed = Object.keys(cleaned).filter(k => cleaned[k] && cleaned[k] !== raw[k]);
@@ -3628,7 +3641,9 @@
         showAIPreviewModal(raw, cleaned, async (approved) => {
           btn.disabled = true;
           btn.textContent = 'Saving...';
-          Object.assign(raw, approved);
+          // Only apply fields that were sent to AI — never overwrite factual fields
+          const TEXT_FIELDS = ['mission_statement','role_title','tasks','top_skills','student_requirements','specific_requirements','ideal_candidate','application_instructions','other_info'];
+          TEXT_FIELDS.forEach(k => { if (approved[k]) raw[k] = approved[k]; });
           await doSaveListing(raw, editId, btn, errEl, form);
         });
       } else {
@@ -3656,6 +3671,97 @@
       loadAdminListings();
       btn.disabled = false;
       btn.textContent = 'Save Listing';
+    }
+
+    function normalizeListingFields(raw) {
+      if (raw.compensation) {
+        const c = raw.compensation.trim();
+        const plain = c.match(/^\$?(\d+(?:\.\d{1,2})?)$/);
+        if (plain) {
+          const n = parseFloat(plain[1]);
+          raw.compensation = `$${Number.isInteger(n) ? n : n.toFixed(2)}/hour`;
+        } else {
+          const hrPat = c.match(/^\$?(\d+(?:\.\d{1,2})?)\s*(?:\/\s*hr(?:s|our)?|per\s+hour)\b/i);
+          if (hrPat) {
+            const n = parseFloat(hrPat[1]);
+            raw.compensation = `$${Number.isInteger(n) ? n : n.toFixed(2)}/hour`;
+          }
+        }
+      }
+      if (raw.weekly_commitment) {
+        const h = raw.weekly_commitment.trim();
+        const plain = h.match(/^(\d+(?:\.\d+)?)$/);
+        if (plain) {
+          raw.weekly_commitment = `${plain[1]} hrs/wk`;
+        } else {
+          const range = h.match(/^(\d+)\s*[-–]\s*(\d+)$/);
+          if (range) raw.weekly_commitment = `${range[1]}–${range[2]} hrs/wk`;
+        }
+      }
+    }
+
+    async function normalizeAllListings() {
+      const btn = document.getElementById('normalize-all-btn');
+      btn.disabled = true;
+      btn.textContent = 'Normalizing...';
+      const { data, error } = await db.from('job_listings').select('id, company_name, compensation, weekly_commitment');
+      if (error || !data) {
+        alert('Error fetching listings: ' + (error?.message || 'unknown'));
+        btn.disabled = false; btn.textContent = 'Normalize All';
+        return;
+      }
+      let updated = 0;
+      for (const row of data) {
+        const norm = { compensation: row.compensation, weekly_commitment: row.weekly_commitment };
+        normalizeListingFields(norm);
+        // Special case: Orbis Design project-based pay
+        if ((row.company_name || '').toLowerCase().includes('orbis')) {
+          norm.compensation = '$25/hour (project-based) — students earn this placement by developing required skills before being matched with a business';
+        }
+        const changes = {};
+        if (norm.compensation !== row.compensation) changes.compensation = norm.compensation;
+        if (norm.weekly_commitment !== row.weekly_commitment) changes.weekly_commitment = norm.weekly_commitment;
+        if (Object.keys(changes).length) {
+          await db.from('job_listings').update(changes).eq('id', row.id);
+          updated++;
+        }
+      }
+      btn.disabled = false; btn.textContent = 'Normalize All';
+      alert(`Done — normalized ${updated} listing${updated !== 1 ? 's' : ''}.`);
+      loadAdminListings();
+    }
+
+    function showAIFailedUI(raw, editId, btn, errEl, form, reason) {
+      errEl.classList.remove('hidden');
+      errEl.style.color = '';
+      errEl.style.background = '';
+      errEl.style.borderColor = '';
+      errEl.innerHTML = `
+        <p style="font-weight:700;margin-bottom:.4rem;">⚠️ AI cleanup failed — <span style="font-weight:400;">${reason}</span></p>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+          <button type="button" id="save-anyway-btn"
+            style="background:#AC161D;color:#fff;border:none;border-radius:.375rem;padding:.375rem .75rem;font-size:.7rem;font-weight:800;font-family:Montserrat,sans-serif;text-transform:uppercase;letter-spacing:.05em;cursor:pointer;">
+            Save Without AI
+          </button>
+          <button type="button" onclick="resetGeminiKey()"
+            style="background:#fff;color:#374151;border:1px solid #d1d5db;border-radius:.375rem;padding:.375rem .75rem;font-size:.7rem;font-weight:700;font-family:Montserrat,sans-serif;cursor:pointer;">
+            Reset API Key
+          </button>
+        </div>`;
+      btn.disabled = false;
+      btn.textContent = 'Save Listing';
+      document.getElementById('save-anyway-btn').addEventListener('click', async () => {
+        errEl.classList.add('hidden');
+        btn.disabled = true;
+        btn.textContent = 'Saving...';
+        await doSaveListing(raw, editId, btn, errEl, form);
+      });
+    }
+
+    function resetGeminiKey() {
+      localStorage.removeItem('wbl_gemini_key');
+      const btn = document.getElementById('add-listing-submit');
+      showGeminiKeyUI(btn);
     }
 
     function showGeminiKeyUI(btn) {
@@ -3702,7 +3808,7 @@
       TEXT_FIELDS.forEach(k => { if (raw[k]) input[k] = raw[k]; });
       if (!Object.keys(input).length) return {};
 
-      const prompt = `You are cleaning up job listing content for a high school Work-Based Learning program.
+      const aiPrompt = `You are cleaning up job listing content for a high school Work-Based Learning program.
 
 Rules:
 - Fix grammar, spelling, capitalization, and punctuation throughout
@@ -3721,27 +3827,36 @@ ${JSON.stringify(input, null, 2)}
 
 Return ONLY valid JSON with the same field names. No markdown, no explanation.`;
 
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { temperature: 0.2, maxOutputTokens: 1500 }
-          })
-        }
-      );
+      // AIzaSy... keys use ?key= param; OAuth tokens (AQ., ya29.) use Bearer header
+      const isApiKey = key.startsWith('AIza');
+      const url = isApiKey
+        ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`
+        : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+      const headers = { 'Content-Type': 'application/json' };
+      if (!isApiKey) headers['Authorization'] = `Bearer ${key}`;
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: aiPrompt }] }],
+          generationConfig: { temperature: 0.2, maxOutputTokens: 1500 }
+        })
+      });
       if (!res.ok) {
         const body = await res.text();
-        if (res.status === 400 || res.status === 403) localStorage.removeItem('wbl_gemini_key');
-        throw new Error(`Gemini API ${res.status}: ${body.slice(0, 120)}`);
+        if (res.status === 401 || res.status === 403) localStorage.removeItem('wbl_gemini_key');
+        throw new Error(`Gemini ${res.status} — ${body.slice(0, 100)}`);
       }
       const data = await res.json();
       const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
       const match = text.match(/\{[\s\S]*\}/);
       if (!match) throw new Error('No JSON in Gemini response');
-      return JSON.parse(match[0]);
+      // Only return known text fields — never allow AI to overwrite factual fields
+      const result = JSON.parse(match[0]);
+      const safe = {};
+      TEXT_FIELDS.forEach(k => { if (result[k]) safe[k] = result[k]; });
+      return safe;
     }
 
     function showAIPreviewModal(original, cleaned, onConfirm) {
