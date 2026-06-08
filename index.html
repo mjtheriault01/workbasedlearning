@@ -3617,6 +3617,7 @@
       try {
         cleaned = await cleanListingWithAI(raw);
       } catch (err) {
+        if (err.message === 'No API key set') return; // key UI is showing — stay open
         console.warn('AI cleanup skipped:', err.message);
       }
 
