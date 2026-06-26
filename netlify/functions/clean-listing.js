@@ -49,13 +49,13 @@ Return ONLY valid JSON with the same field names. No markdown, no explanation.`;
 
   // Try as API key first, then as Bearer token (handles both AIzaSy... and AQ... formats)
   let res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
     { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: requestBody }
   );
 
   if (!res.ok && (res.status === 401 || res.status === 403)) {
     res = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
       { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` }, body: requestBody }
     );
   }
