@@ -385,51 +385,7 @@
   </style>
 </head>
 
-<body class="bg-white text-navy-900 antialiased overflow-hidden">
-
-  <!-- Password Protection Screen -->
-  <div id="password-screen" class="fixed inset-0 z-[999] bg-navy-900 flex items-center justify-center px-6">
-    <div class="w-full max-w-sm text-center">
-      <img
-        src="https://res.cloudinary.com/dsbllwpbh/image/upload/v1770990807/field-study-logo-trans_kewube.png"
-        alt="BHS Work-Based Learning"
-        class="h-14 mx-auto mb-8 opacity-90"
-      />
-      <p class="text-navy-300 text-sm uppercase tracking-widest font-semibold mb-6">Enter Password to Continue</p>
-      <form onsubmit="checkPassword(event)" class="space-y-4">
-        <input
-          id="password-input"
-          type="password"
-          autocomplete="off"
-          placeholder="Password"
-          class="w-full px-5 py-4 bg-navy-800 border border-navy-700 rounded text-white text-center text-sm tracking-wider focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder:text-navy-500"
-        />
-        <button type="submit" class="w-full bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
-          Enter
-        </button>
-        <p id="password-error" class="text-crimson-400 text-sm hidden">Incorrect password. Try again.</p>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    function checkPassword(e) {
-      e.preventDefault();
-      var input = document.getElementById('password-input');
-      if (input.value === 'Bulldogs1') {
-        var screen = document.getElementById('password-screen');
-        screen.style.opacity = '0';
-        screen.style.transition = 'opacity 0.4s ease';
-        document.body.classList.remove('overflow-hidden');
-        setTimeout(function() { screen.remove(); }, 400);
-      } else {
-        document.getElementById('password-error').classList.remove('hidden');
-        input.value = '';
-        input.focus();
-      }
-    }
-    document.getElementById('password-input').focus();
-  </script>
+<body class="bg-white text-navy-900 antialiased">
 
   <!-- Navigation -->
   <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-navy-100">
@@ -868,7 +824,7 @@
               loop
               muted
               preload="metadata"
-              poster=""
+              poster="https://res.cloudinary.com/dikkdclum/video/upload/so_2/v1780491559/wbl/video/incubator.jpg"
               onclick="this.paused ? this.play() : this.pause()"
             >
               <source src="https://res.cloudinary.com/dikkdclum/video/upload/vc_h264,f_mp4/v1780491559/wbl/video/incubator.mp4" type="video/mp4">
@@ -3208,11 +3164,13 @@
 
     function buildPartnerCard(p, idx) {
       const logo = p.company_logo || (p.company_website ? `https://logo.clearbit.com/${new URL(p.company_website).hostname}` : '');
-      const logoBg = p.logo_bg || ((p.company_name || '').toLowerCase().includes('bps') ? '#AC161D' : p.dark_card ? '#000000' : '#f5f5f5');
+      const name = (p.company_name || '').toLowerCase();
+      const isBPS = name.includes('bps') || name.includes('batavia public');
+      const logoBg = p.logo_bg || (isBPS ? '#AC161D' : p.dark_card ? '#000000' : '#f5f5f5');
       return `
-        <div class="bg-white border border-navy-200 rounded-lg p-5 flex flex-col items-center justify-center min-h-[120px] gap-3 hover:border-crimson-800 hover:shadow-md transition-all group cursor-pointer" onclick="openPartnerModal(${idx})">
-          <div class="w-14 h-14 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0" style="background:${logoBg}">
-            ${logo ? `<img src="${esc(logo)}" alt="${esc(p.company_name)}" class="w-full h-full object-contain p-1.5" onerror="this.parentElement.style.background='#f5f5f5';this.style.display='none'">` : ''}
+        <div class="bg-white border border-navy-200 rounded-lg p-5 flex flex-col items-center justify-center min-h-[140px] gap-3 hover:border-crimson-800 hover:shadow-md transition-all group cursor-pointer" onclick="openPartnerModal(${idx})">
+          <div class="w-20 h-20 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0" style="background:${logoBg}">
+            ${logo ? `<img src="${esc(logo)}" alt="${esc(p.company_name)}" class="w-full h-full object-contain p-2" onerror="this.parentElement.style.background='#f5f5f5';this.style.display='none'">` : ''}
           </div>
           <div class="text-center">
             <p class="font-heading font-bold text-navy-900 text-sm">${esc(p.company_name)}</p>
