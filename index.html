@@ -745,9 +745,8 @@
   </section>
 
   <!-- Promise / Equity Section -->
-  <section class="py-24 md:py-32 px-6 md:px-8 relative overflow-hidden" style="background-image:url('https://res.cloudinary.com/dikkdclum/image/upload/c_fill,w_1600,h_900/wbl/partner-heroes/community-batavia.png');background-size:cover;background-position:center;">
-    <div class="absolute inset-0 bg-white/88"></div>
-    <div class="relative max-w-7xl mx-auto">
+  <section class="py-24 md:py-32 px-6 md:px-8">
+    <div class="max-w-7xl mx-auto">
 
       <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
 
@@ -1333,7 +1332,7 @@
   <div id="modal-job-shadow" class="modal-backdrop items-center justify-center p-6">
     <div class="modal-content bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg">
       <div class="relative h-52 overflow-hidden rounded-t-lg">
-        <img src="https://res.cloudinary.com/dikkdclum/image/upload/c_fill,h_400,w_800/wbl/partner-heroes/modal-job-shadow.png" alt="" class="w-full h-full object-cover">
+        <img src="https://res.cloudinary.com/dikkdclum/image/upload/c_fill,h_400,w_800/wbl/partner-heroes/modal-job-shadow.png" alt="" class="absolute inset-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-navy-900/60 to-transparent"></div>
       </div>
       <div class="p-8 md:p-10">
@@ -1397,7 +1396,7 @@
   <div id="modal-guest-speaker" class="modal-backdrop items-center justify-center p-6">
     <div class="modal-content bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg">
       <div class="relative h-52 overflow-hidden rounded-t-lg">
-        <img src="https://res.cloudinary.com/dikkdclum/image/upload/c_fill,h_400,w_800/wbl/partner-heroes/modal-guest-speaker.png" alt="" class="w-full h-full object-cover">
+        <img src="https://res.cloudinary.com/dikkdclum/image/upload/c_fill,h_400,w_800/wbl/partner-heroes/modal-guest-speaker.png" alt="" class="absolute inset-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-navy-900/60 to-transparent"></div>
       </div>
       <div class="p-8 md:p-10">
@@ -1460,7 +1459,7 @@
   <div id="modal-mentorship" class="modal-backdrop items-center justify-center p-6">
     <div class="modal-content bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg">
       <div class="relative h-52 overflow-hidden rounded-t-lg">
-        <img src="https://res.cloudinary.com/dikkdclum/image/upload/c_fill,h_400,w_800/wbl/partner-heroes/modal-mentor-advisor.png" alt="" class="w-full h-full object-cover">
+        <img src="https://res.cloudinary.com/dikkdclum/image/upload/c_fill,h_400,w_800/wbl/partner-heroes/modal-mentor-advisor.png" alt="" class="absolute inset-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-navy-900/60 to-transparent"></div>
       </div>
       <div class="p-8 md:p-10">
@@ -1525,7 +1524,7 @@
   <div id="modal-field-experience-placement" class="modal-backdrop items-center justify-center p-6">
     <div class="modal-content bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg">
       <div class="relative h-52 overflow-hidden rounded-t-lg">
-        <img src="https://res.cloudinary.com/dikkdclum/image/upload/c_fill,h_400,w_800/wbl/partner-heroes/modal-field-experience.png" alt="" class="w-full h-full object-cover">
+        <img src="https://res.cloudinary.com/dikkdclum/image/upload/c_fill,h_400,w_800/wbl/partner-heroes/modal-field-experience.png" alt="" class="absolute inset-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-navy-900/60 to-transparent"></div>
       </div>
       <div class="p-8 md:p-10">
@@ -3829,9 +3828,10 @@
     }
 
     async function doSaveListing(raw, editId, btn, errEl, form) {
+      const payload = editId ? raw : { ...raw, is_active: true };
       const { error } = editId
-        ? await db.from('job_listings').update(raw).eq('id', editId)
-        : await db.from('job_listings').insert([raw]);
+        ? await db.from('job_listings').update(payload).eq('id', editId)
+        : await db.from('job_listings').insert([payload]);
 
       if (error) {
         errEl.textContent = 'Error: ' + error.message;
