@@ -3945,13 +3945,27 @@
       content.classList.remove('hidden');
     }
 
+    // Self-enterprise student businesses are hand-curated each semester (not self-serve via
+    // admin panel), so their real websites are tracked here rather than as a DB column.
+    const SELF_ENTERPRISE_WEBSITES = {
+      'e-moto decals': 'https://emddecals.com',
+      'vantage': 'https://vantagedecals.com',
+      'dawg house events': 'https://dawghouseeventsinc.com/',
+      'the windmill weekly': 'https://windmillweekly.com',
+      'yelm brands': 'https://apex-ai-solutions.b12sites.com/',
+    };
+
     function buildShowcaseLogoTile(l) {
-      return `
-        <div class="bg-white rounded-xl h-32 p-4 flex items-center justify-center border-t-4 border-gold-500 shadow-xl transition-transform duration-300 hover:-translate-y-1">
+      const tileInner = `
           ${l.logo_url
             ? `<img src="${esc(l.logo_url)}" alt="${esc(l.business_name)}" class="max-w-full max-h-full object-contain">`
-            : `<span class="font-heading font-bold text-navy-700 text-sm text-center">${esc(l.business_name)}</span>`}
-        </div>`;
+            : `<span class="font-heading font-bold text-navy-700 text-sm text-center">${esc(l.business_name)}</span>`}`;
+      const website = SELF_ENTERPRISE_WEBSITES[(l.business_name || '').toLowerCase().trim()];
+      const cardClasses = 'bg-white rounded-xl h-32 p-4 flex items-center justify-center border-t-4 border-gold-500 shadow-xl transition-transform duration-300 hover:-translate-y-1';
+
+      return website
+        ? `<a href="${esc(website)}" target="_blank" rel="noopener" class="${cardClasses} cursor-pointer" title="Visit ${esc(l.business_name)}'s website">${tileInner}</a>`
+        : `<div class="${cardClasses}">${tileInner}</div>`;
     }
 
     // Brandfetch-first, Clearbit-fallback auto-logo on website blur in add-partner form
