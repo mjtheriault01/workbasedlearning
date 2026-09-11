@@ -436,7 +436,7 @@
       <!-- Desktop Nav -->
       <div class="hidden md:flex items-center gap-8">
         <a href="#partner-ways" class="text-navy-600 hover:text-crimson-800 text-sm font-medium transition-colors">How to Partner</a>
-        <a href="#partners" class="text-navy-600 hover:text-crimson-800 text-sm font-medium transition-colors">Our Partners</a>
+        <a href="partners.html" class="text-navy-600 hover:text-crimson-800 text-sm font-medium transition-colors">Our Partners</a>
         <a href="#business" class="text-navy-600 hover:text-crimson-800 text-sm font-medium transition-colors">For Business</a>
         <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="bg-crimson-800 text-white px-6 py-2.5 text-sm font-semibold hover:bg-crimson-700 transition-colors">
           Partner With Us
@@ -457,7 +457,7 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden border-t border-navy-100 px-6 py-4 space-y-3 bg-white/95 backdrop-blur-md">
       <a href="#partner-ways" class="block text-navy-700 text-sm font-medium py-2" onclick="toggleMobileMenu()">How to Partner</a>
-      <a href="#partners" class="block text-navy-700 text-sm font-medium py-2" onclick="toggleMobileMenu()">Our Partners</a>
+      <a href="partners.html" class="block text-navy-700 text-sm font-medium py-2" onclick="toggleMobileMenu()">Our Partners</a>
       <a href="#business" class="block text-navy-700 text-sm font-medium py-2" onclick="toggleMobileMenu()">For Business</a>
       <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank'); toggleMobileMenu();" class="w-full bg-crimson-800 text-white px-6 py-3 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors text-center">
         Partner With Us
@@ -1000,46 +1000,6 @@
     </div>
   </section>
 
-  <!-- Partner Businesses Section -->
-  <section id="partners" class="py-24 md:py-32 px-6 md:px-8 bg-navy-50">
-    <div class="max-w-7xl mx-auto">
-
-      <div class="text-center mb-16">
-        <p class="text-sm uppercase tracking-widest text-crimson-800 font-semibold mb-4">Our Partners</p>
-        <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 mb-4">
-          Businesses Already On Board
-        </h2>
-        <p class="text-lg text-navy-600 max-w-2xl mx-auto">
-          These Batavia-area businesses are investing in the next generation. Want to join them?
-        </p>
-      </div>
-
-      <!-- Partner Grid (dynamic via Supabase) -->
-      <div id="partners-loading" class="flex items-center gap-3 text-navy-400 py-8">
-        <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-        </svg>
-        <span class="text-sm font-heading font-medium">Loading partners...</span>
-      </div>
-      <div id="partners-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-16 hidden"></div>
-
-      <!-- Partner Testimonials (dynamic via Supabase) -->
-      <div class="max-w-4xl mx-auto">
-        <h3 class="font-heading text-xl font-bold text-navy-900 mb-8 text-center">What Our Partners Say</h3>
-        <div id="testimonials-loading" class="flex items-center justify-center gap-3 text-navy-400 py-8">
-          <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-          </svg>
-          <span class="text-sm font-heading font-medium">Loading testimonials...</span>
-        </div>
-        <div id="testimonials-grid" class="grid md:grid-cols-2 gap-8 hidden"></div>
-      </div>
-
-    </div>
-  </section>
-
   <!-- Field Experience Partner Wall (semester showcase) -->
   <section id="partner-wall" class="py-24 md:py-32 px-6 md:px-8 bg-gradient-to-br from-[#0B1220] via-[#1a0508] to-[#3a0b10]">
     <div class="max-w-6xl mx-auto">
@@ -1083,6 +1043,53 @@
       </div>
 
       <div id="partner-wall-empty" class="hidden text-center text-white/40 italic py-8">No partner showcase published yet.</div>
+
+    </div>
+  </section>
+
+  <!-- Partner Businesses Section (teaser — full directory lives on partners.html) -->
+  <section id="partners" class="py-24 md:py-32 px-6 md:px-8 bg-navy-50">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="text-center mb-16">
+        <p class="text-sm uppercase tracking-widest text-crimson-800 font-semibold mb-4">Our Partners</p>
+        <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 mb-4">
+          Businesses Already On Board
+        </h2>
+        <p class="text-lg text-navy-600 max-w-2xl mx-auto">
+          These Batavia-area businesses are investing in the next generation. Want to join them?
+        </p>
+      </div>
+
+      <!-- Partner Grid preview (dynamic via Supabase, first several only) -->
+      <div id="partners-loading" class="flex items-center gap-3 text-navy-400 py-8">
+        <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+        </svg>
+        <span class="text-sm font-heading font-medium">Loading partners...</span>
+      </div>
+      <div id="partners-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-12 hidden"></div>
+
+      <div class="text-center mb-16">
+        <a href="partners.html" class="inline-flex items-center gap-2 border-2 border-navy-900 text-navy-900 px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-navy-900 hover:text-white transition-colors cta-outline">
+          See All Our Partners
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+
+      <!-- Partner Testimonials (dynamic via Supabase) -->
+      <div class="max-w-4xl mx-auto">
+        <h3 class="font-heading text-xl font-bold text-navy-900 mb-8 text-center">What Our Partners Say</h3>
+        <div id="testimonials-loading" class="flex items-center justify-center gap-3 text-navy-400 py-8">
+          <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+          </svg>
+          <span class="text-sm font-heading font-medium">Loading testimonials...</span>
+        </div>
+        <div id="testimonials-grid" class="grid md:grid-cols-2 gap-8 hidden"></div>
+      </div>
 
     </div>
   </section>
@@ -1227,7 +1234,7 @@
 
         <div class="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-12">
           <a href="#partner-ways" class="text-navy-300 hover:text-white text-sm transition-colors">How to Partner</a>
-          <a href="#partners" class="text-navy-300 hover:text-white text-sm transition-colors">Our Partners</a>
+          <a href="partners.html" class="text-navy-300 hover:text-white text-sm transition-colors">Our Partners</a>
           <a href="#team" class="text-navy-300 hover:text-white text-sm transition-colors">Meet the Team</a>
           <a href="#" onclick="openModal('inquiry-form'); return false;" class="text-navy-300 hover:text-white text-sm transition-colors">Contact</a>
         </div>
@@ -3783,7 +3790,8 @@
 
       _allPartners = data;
       if (grid) {
-        grid.innerHTML = data.map((p, i) => buildPartnerCard(p, i)).join('') + buildPartnerCta();
+        // Homepage only teases a handful — full directory lives on partners.html
+        grid.innerHTML = data.slice(0, 8).map((p, i) => buildPartnerCard(p, i)).join('');
         grid.classList.remove('hidden');
       }
     }
