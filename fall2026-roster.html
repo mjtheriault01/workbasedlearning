@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fall 2026 Placement Roster — Work-Based Learning</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root {
+    --navy: #1a1a1a;
+    --crimson: #AC161D;
+    --gold: #FBCD07;
+    --gray: #5D5D5D;
+    --line: #D9D9D9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: var(--navy);
+    background: #f5f5f5;
+  }
+  .toolbar {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--navy); color: #fff;
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .toolbar h1 { font-size: 15px; margin: 0; font-weight: 700; }
+  .toolbar p { font-size: 12px; margin: 2px 0 0; color: #bbb; }
+  .toolbar button {
+    background: var(--crimson); color: #fff; border: none;
+    padding: 10px 20px; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer; border-radius: 4px;
+  }
+  .toolbar button:hover { background: #8f1218; }
+  .note {
+    max-width: 900px; margin: 20px auto 0; padding: 0 24px;
+    font-size: 13px; color: var(--gray); line-height: 1.5;
+  }
+  .sheet {
+    max-width: 900px; margin: 20px auto 60px; background: #fff;
+    padding: 32px; box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  }
+  .sheet-title { font-size: 22px; font-weight: 800; margin: 0 0 4px; }
+  .sheet-sub { font-size: 13px; color: var(--gray); margin: 0 0 24px; }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--gray);
+    border-bottom: 2px solid var(--navy); padding: 8px 10px;
+  }
+  td {
+    padding: 12px 10px; border-bottom: 1px solid var(--line);
+    font-size: 14px; vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #fafafa; }
+  .company { font-weight: 700; }
+  .role { color: var(--gray); font-size: 12.5px; margin-top: 2px; }
+  .mentor { color: var(--gray); font-size: 12px; }
+  .name-input {
+    width: 100%; border: none; border-bottom: 1.5px solid var(--navy);
+    font-size: 14px; font-family: inherit; padding: 4px 2px;
+    background: transparent;
+  }
+  .name-input:focus { outline: none; border-bottom-color: var(--crimson); }
+
+  @media print {
+    .toolbar, .note { display: none; }
+    body { background: #fff; }
+    .sheet { box-shadow: none; margin: 0; padding: 0; max-width: none; }
+    tr:nth-child(even) td { background: transparent; }
+    .name-input { border-bottom: 1px solid #000; }
+    table { page-break-inside: auto; }
+    tr { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <div>
+      <h1>Fall 2026 Placement Roster</h1>
+      <p>Type student names below, then print — nothing here is saved or sent anywhere.</p>
+    </div>
+    <button onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <p class="note">
+    This page never talks to a server — everything you type into the Student Name fields
+    stays in your browser only. Fill in names, then use the Print button (or Ctrl/Cmd+P)
+    and choose "Save as PDF." Refreshing or closing the page clears anything typed, so
+    print or save before you navigate away.
+  </p>
+
+  <div class="sheet">
+    <p class="sheet-title">Fall 2026 Field Experience Placements</p>
+    <p class="sheet-sub">Business partner, role, and mentor — write in each student's name before printing.</p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:34%">Business &amp; Career</th>
+          <th style="width:26%">Mentor</th>
+          <th style="width:40%">Student Name</th>
+        </tr>
+      </thead>
+      <tbody id="roster-body"></tbody>
+    </table>
+  </div>
+
+<script>
+  const PLACEMENTS = [
+    {"company_name":"Alicia Brooks Collective","role_title":"Real Estate Marketing & Client Relations Intern","mentor_name":"Alicia Brooks"},
+    {"company_name":"Batavia Police Department","role_title":"Law Enforcement & Public Safety Field Experience","mentor_name":"Officer Saad"},
+    {"company_name":"Batavia Public Library","role_title":"Graphic Design & Marketing Intern","mentor_name":"Cesar Orozco"},
+    {"company_name":"Bob Jass Chevrolet","role_title":"Automotive Service Technician Apprentice","mentor_name":"Mike Kallembach"},
+    {"company_name":"BPS 101 Athletics","role_title":"Athletic Program & Operations Intern","mentor_name":"Mark Anderson"},
+    {"company_name":"BPS 101 Building & Grounds","role_title":"Building & Grounds Maintenance Intern","mentor_name":"Robert Schmidt"},
+    {"company_name":"BPS 101 Superintendent","role_title":"Education Policy & Leadership Intern","mentor_name":"Tom Kim"},
+    {"company_name":"BPS101 Athletic Training","role_title":"Athletic Training Student Aide","mentor_name":"Zac Roberts, Jake Reist"},
+    {"company_name":"BPS101 Business","role_title":"Business Office Operations Intern","mentor_name":"Josh Bulak"},
+    {"company_name":"BPS101 Communications","role_title":"Social Media & Content Creator Intern","mentor_name":"Holly Deitchman"},
+    {"company_name":"BPS101 Nursing","role_title":"School Nursing Intern","mentor_name":"Kelii Coonrod"},
+    {"company_name":"BPS101 Technology Department","role_title":"IT Help Desk Technician","mentor_name":"David Thurlby & Rob Luxton & Lynn Bartolotta"},
+    {"company_name":"Bulldog Plumbing","role_title":"Plumbing & Pipefitting Apprentice Intern","mentor_name":"Doug Saam"},
+    {"company_name":"Donat & Donat","role_title":"Legal & Administrative Intern","mentor_name":"Kate Donat Iturralde"},
+    {"company_name":"Drendel & Jansons Law Group","role_title":"Legal Administrative Support Intern","mentor_name":"Ed Boula & Kevin Drendel"},
+    {"company_name":"Easter Seals","role_title":"Pediatric Therapy Clinic Intern","mentor_name":"Wendy Lirgameris"},
+    {"company_name":"Fire 'n' Ice HVAC","role_title":"HVAC Shop & Logistics Assistant Intern","mentor_name":"Casey Michalek"},
+    {"company_name":"J DeCarlo Salon and Spa","role_title":"Cosmetology & Salon Operations Field Experience","mentor_name":"Emily"},
+    {"company_name":"Orbis Design","role_title":"Marketing & AI Innovation Intern","mentor_name":"Gary Ricke"},
+    {"company_name":"Organic Life","role_title":"Food Service & Kitchen Operations Intern","mentor_name":"Anne Hjelmberg (BHS Kitchen Manager), Also Tony Lopez"},
+    {"company_name":"Physical Therapy Advantage","role_title":"Physical Therapy Patient Care Intern","mentor_name":"Joe King"},
+    {"company_name":"Richards-Wilcox, Inc.","role_title":"Mechanical & Design Engineering Intern","mentor_name":"Tracy Mikes"},
+    {"company_name":"Smith & Richardson","role_title":"Manufacturing Engineering Intern","mentor_name":"Ron Brown"},
+    {"company_name":"The Cosentino Law Firm, LLC","role_title":"Legal Administrative & Research Intern","mentor_name":"Chris Cosentino"},
+    {"company_name":"VSW","role_title":"Program Assistant Intern (Occupational Therapy, Social Work, Recreation Management, Business)","mentor_name":"Megan Saltijeral, Hugo Saltijeral"},
+    {"company_name":"Why Rent Real Estate","role_title":"Real Estate Marketing & Client Relations Intern","mentor_name":"Mayra Perez"}
+  ];
+
+  function esc(s) {
+    return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  document.getElementById('roster-body').innerHTML = PLACEMENTS.map((p, i) => `
+    <tr>
+      <td>
+        <div class="company">${esc(p.company_name)}</div>
+        <div class="role">${esc(p.role_title)}</div>
+      </td>
+      <td class="mentor">${esc(p.mentor_name || '')}</td>
+      <td><input type="text" class="name-input" placeholder="Student name" id="name-${i}" autocomplete="off"></td>
+    </tr>
+  `).join('');
+</script>
+
+</body>
+</html>

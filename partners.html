@@ -73,6 +73,23 @@
     .partner-row-panel img { transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
     .partner-row:hover .partner-row-panel img { transform: scale(1.06); }
     .partner-row-flatbg { background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 2px, transparent 2px, transparent 14px); }
+
+    /* Cluster filter pills */
+    .cluster-pill {
+      --pill-color: #AC161D;
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      border: 1.5px solid #D9D9D9;
+      background: #ffffff;
+      color: #4a4a4a;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .cluster-pill:hover { border-color: var(--pill-color); color: var(--pill-color); }
+    .cluster-pill.active { background: var(--pill-color); border-color: var(--pill-color); color: #ffffff; }
   </style>
 </head>
 
@@ -133,6 +150,15 @@
       </p>
     </div>
   </header>
+
+  <!-- Cluster Filter -->
+  <div class="px-6 md:px-8 py-8 bg-navy-50 border-t border-navy-100">
+    <div class="max-w-5xl mx-auto">
+      <p class="text-xs uppercase tracking-widest text-navy-400 font-semibold mb-4">Filter by career cluster</p>
+      <div id="cluster-filters" class="flex flex-wrap gap-2"></div>
+      <p id="cluster-count" class="text-sm text-navy-400 mt-4"></p>
+    </div>
+  </div>
 
   <!-- Partner Directory -->
   <main class="px-6 md:px-8 py-16 md:py-24">
@@ -247,6 +273,59 @@
       return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
+    // Matches the 7 FE career clusters (cluster-*.html) by keyword rather than exact string,
+    // since partners.industry values aren't consistently worded ("Finance & Business" vs
+    // "Business & Finance", "Arts and Communication" vs "Arts & Communication", etc.)
+    const CLUSTERS = [
+      { id: 'agriculture',    label: 'Agriculture, Food & Natural Resources', color: '#2d6a4f', keywords: ['agricultur'] },
+      { id: 'arts',           label: 'Arts & Communication',                  color: '#7b2d8b', keywords: ['arts', 'communication'] },
+      { id: 'finance',        label: 'Finance & Business',                    color: '#1a3a5c', keywords: ['finance', 'business'] },
+      { id: 'health',         label: 'Health Sciences',                      color: '#AC161D', keywords: ['health'] },
+      { id: 'human',          label: 'Human & Public Services',               color: '#c47a15', keywords: ['human', 'public service'] },
+      { id: 'it',             label: 'Information Technology',                color: '#0f4c75', keywords: ['information technology', 'technology dept'] },
+      { id: 'manufacturing',  label: 'Manufacturing, Engineering & Trades',   color: '#5a3e1b', keywords: ['manufactur', 'engineering', 'trades'] },
+    ];
+    let _activeCluster = 'all';
+
+    function partnerMatchesCluster(p, clusterId) {
+      if (clusterId === 'all') return true;
+      const cluster = CLUSTERS.find(c => c.id === clusterId);
+      const industry = (p.industry || '').toLowerCase();
+      return cluster.keywords.some(kw => industry.includes(kw));
+    }
+
+    function renderClusterFilters() {
+      const wrap = document.getElementById('cluster-filters');
+      const allBtn = `<button data-cluster="all" class="cluster-pill" onclick="setClusterFilter('all')">All Partners</button>`;
+      const btns = CLUSTERS.map(c =>
+        `<button data-cluster="${c.id}" class="cluster-pill" style="--pill-color:${c.color}" onclick="setClusterFilter('${c.id}')">${esc(c.label)}</button>`
+      ).join('');
+      wrap.innerHTML = allBtn + btns;
+      updateClusterButtonStates();
+    }
+
+    function updateClusterButtonStates() {
+      document.querySelectorAll('.cluster-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cluster === _activeCluster);
+      });
+    }
+
+    function setClusterFilter(clusterId) {
+      _activeCluster = clusterId;
+      updateClusterButtonStates();
+      const rows = document.querySelectorAll('.partner-row');
+      let shown = 0;
+      rows.forEach((row, i) => {
+        const match = partnerMatchesCluster(_allPartners[i], clusterId);
+        row.classList.toggle('hidden', !match);
+        if (match) shown++;
+      });
+      const countEl = document.getElementById('cluster-count');
+      countEl.textContent = clusterId === 'all'
+        ? `Showing all ${_allPartners.length} partners`
+        : `Showing ${shown} of ${_allPartners.length} partners`;
+    }
+
     const INDUSTRY_ACCENTS = {
       'skilled trades': '#b45309', 'manufacturing': '#b45309', 'engineering': '#b45309',
       'health': '#0d9488', 'nonprofit': '#7c3aed', 'information technology': '#2563eb',
@@ -316,6 +395,8 @@
       _allPartners = data;
       list.innerHTML = data.map((p, i) => buildPartnerRow(p, i)).join('');
       list.classList.remove('hidden');
+      renderClusterFilters();
+      setClusterFilter(_activeCluster);
     }
 
     function openPartnerModal(idx) {
