@@ -3947,12 +3947,29 @@
 
     // Self-enterprise student businesses are hand-curated each semester (not self-serve via
     // admin panel), so their real websites are tracked here rather than as a DB column.
-    const SELF_ENTERPRISE_WEBSITES = {
+    // Partner Wall tiles are hand-curated each semester (not self-serve via admin panel),
+    // so real business websites are tracked here rather than as a DB column. Composite/
+    // non-single-business tiles (e.g. Law Enforcement Exposure Experience) are intentionally
+    // left out — there's no one real site to send visitors to.
+    const SHOWCASE_WEBSITES = {
+      // Self Enterprise Wall
       'e-moto decals': 'https://emotodecals.com',
       'vantage': 'https://vantagedecals.com',
       'dawg house events': 'https://dawghouseeventsinc.com/',
       'the windmill weekly': 'https://thewindmillweekly.com/',
       'yelm brands': 'https://apex-ai-solutions.b12sites.com/',
+      // Business Partner Wall
+      'the cosentino law firm, llc': 'https://www.cosentinolaw.net/',
+      'donat & donat': 'https://www.donatlaw.com/',
+      'beam alpha, inc.': 'https://beamalpha.com/',
+      'smith & richardson manufacturing group': 'https://www.smithandrichardson.com/',
+      'j decarlo salon & spa': 'https://jdecarlosalonandspa.com/',
+      'bob jass chevrolet - elburn': 'https://www.bobjasschevrolet.com/',
+      'bulldog plumbing': 'https://bulldog-plumbing.com/',
+      'physical therapy advantage': 'https://www.ptadvantagepc.com/',
+      'easter seals': 'https://www.easterseals.com/',
+      'alicia brooks collective': 'https://aliciabrooksrealestate.com/',
+      'batavia public school district 101': 'https://www.bps101.net/',
     };
 
     function buildShowcaseLogoTile(l) {
@@ -3960,7 +3977,7 @@
           ${l.logo_url
             ? `<img src="${esc(l.logo_url)}" alt="${esc(l.business_name)}" class="max-w-full max-h-full object-contain">`
             : `<span class="font-heading font-bold text-navy-700 text-sm text-center">${esc(l.business_name)}</span>`}`;
-      const website = SELF_ENTERPRISE_WEBSITES[(l.business_name || '').toLowerCase().trim()];
+      const website = SHOWCASE_WEBSITES[(l.business_name || '').toLowerCase().trim()];
       const cardClasses = 'bg-white rounded-xl h-32 p-4 flex items-center justify-center border-t-4 border-gold-500 shadow-xl transition-transform duration-300 hover:-translate-y-1';
 
       return website
