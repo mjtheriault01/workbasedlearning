@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fall 2026 Placements (One Page) — Work-Based Learning</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a1a1a;
+    --crimson: #AC161D;
+    --gold: #FBCD07;
+    --gray: #5D5D5D;
+    --line: #E2E2E2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Open Sans', 'Segoe UI', Arial, sans-serif;
+    color: var(--navy);
+    background: #ecedef;
+  }
+  .toolbar {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--navy); color: #fff;
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .toolbar h1 { font-family: 'Montserrat', sans-serif; font-size: 15px; margin: 0; font-weight: 700; }
+  .toolbar p { font-size: 12px; margin: 2px 0 0; color: #bbb; }
+  .toolbar button {
+    background: var(--crimson); color: #fff; border: none;
+    padding: 10px 20px; font-size: 13px; font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer; border-radius: 4px;
+  }
+  .toolbar button:hover { background: #8f1218; }
+  .note {
+    max-width: 1150px; margin: 20px auto 0; padding: 0 24px;
+    font-size: 13px; color: var(--gray); line-height: 1.5;
+  }
+
+  .page {
+    max-width: 1150px; margin: 24px auto 40px; background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-radius: 12px; overflow: hidden;
+  }
+
+  .letterhead {
+    padding: 16px 30px;
+    background: linear-gradient(135deg, #0B1220 0%, #1a0508 60%, #3a0b10 100%);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .letterhead img { height: 38px; width: auto; flex-shrink: 0; }
+  .letterhead .eyebrow { font-family: 'Montserrat', sans-serif; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); font-weight: 700; margin: 0; }
+  .letterhead h1 { font-family: 'Montserrat', sans-serif; font-size: 19px; font-weight: 900; color: #fff; margin: 1px 0 0; letter-spacing: -0.01em; }
+
+  .columns {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  }
+  .col { padding: 16px 24px 20px; }
+  .col + .col { border-left: 1px solid var(--line); }
+  .col-title { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 800; margin: 0 0 2px; color: var(--navy); }
+  .col-sub { font-size: 10.5px; color: var(--gray); margin: 0 0 10px; }
+
+  .row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 0; border-bottom: 1px solid var(--line);
+  }
+  .row-logo { width: 28px; height: 28px; object-fit: contain; border: 1px solid var(--line); border-radius: 4px; background: #fff; padding: 2px; flex-shrink: 0; }
+  .row-info { flex: 1; min-width: 0; }
+  .row-name { font-weight: 700; font-family: 'Montserrat', sans-serif; font-size: 10.8px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-sub { color: var(--gray); font-size: 9px; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-sub a { color: var(--crimson); text-decoration: none; }
+  .name-input {
+    width: 128px; flex-shrink: 0; border: none; border-bottom: 1.3px solid var(--navy);
+    font-size: 11px; font-family: inherit; padding: 3px 2px;
+    background: transparent;
+  }
+  .name-input:focus { outline: none; border-bottom-color: var(--crimson); }
+
+  @page { size: landscape; margin: 0.35in; }
+  @media print {
+    .toolbar, .note { display: none; }
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; border-radius: 0; max-width: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <div>
+      <h1>Fall 2026 Placements — One Page</h1>
+      <p>Type student names below, then print — nothing here is saved or sent anywhere.</p>
+    </div>
+    <button onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <p class="note">
+    This is a compact one-page alternative to the full roster — same info, denser layout,
+    printed landscape. Nothing here is saved or sent anywhere; type names, then print
+    (or Ctrl/Cmd+P) and choose "Save as PDF."
+  </p>
+
+  <div class="page">
+    <div class="letterhead">
+      <img src="https://res.cloudinary.com/dsbllwpbh/image/upload/v1770990807/field-study-logo-trans_kewube.png" alt="BHS Field Experience">
+      <div>
+        <p class="eyebrow">Batavia Public Schools · BPS 101</p>
+        <h1>Fall 2026 Placements</h1>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="col">
+        <p class="col-title">Business Partners</p>
+        <p class="col-sub">Write in each student's name.</p>
+        <div id="roster-body"></div>
+      </div>
+      <div class="col">
+        <p class="col-title">Self Enterprise Students</p>
+        <p class="col-sub">Write in each student's name.</p>
+        <div id="self-enterprise-body"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const PLACEMENTS = [
+    {"company_name":"The Cosentino Law Firm, LLC","role_title":"Legal Administrative & Research Intern","mentor_name":"Chris Cosentino","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/cosentino-law-firm.png"},
+    {"company_name":"Donat & Donat","role_title":"Legal & Administrative Intern","mentor_name":"Kate Donat Iturralde","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/donat-donat.png"},
+    {"company_name":"Law Enforcement Exposure Experience","role_title":"Law Enforcement & Public Safety Field Experience","mentor_name":"Officer Saad","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/v1789654245/wbl/logos/launch-fall2026/law-enforcement-exposure-v2.png"},
+    {"company_name":"Beam Alpha, Inc.","role_title":"","mentor_name":"Gerry Jackson","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/beam-alpha.png"},
+    {"company_name":"Smith & Richardson Manufacturing Group","role_title":"Manufacturing Engineering Intern","mentor_name":"Ron Brown","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/smith-richardson.png"},
+    {"company_name":"J DeCarlo Salon & Spa","role_title":"Cosmetology & Salon Operations Field Experience","mentor_name":"Jen DeCarlo, Emily Mastenbrook","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/jdecarlo-salon-spa.png"},
+    {"company_name":"Easter Seals","role_title":"Pediatric Therapy Clinic Intern","mentor_name":"Wendy Lirgameris","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto/wbl/logos/easter-seals-v3"},
+    {"company_name":"Physical Therapy Advantage","role_title":"Physical Therapy Patient Care Intern","mentor_name":"Joe King","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/physical-therapy-advantage.png"},
+    {"company_name":"Bob Jass Chevrolet - Elburn","role_title":"Automotive Service Technician Apprentice","mentor_name":"Mike Kallembach","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bob-jass-chevrolet.png"},
+    {"company_name":"Bulldog Plumbing","role_title":"Plumbing & Pipefitting Apprentice Intern","mentor_name":"Doug Saam","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bulldog-plumbing.png"},
+    {"company_name":"Alicia Brooks Collective","role_title":"Real Estate Marketing & Client Relations Intern","mentor_name":"Alicia Brooks","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/alicia-brooks-collective.png"},
+    {"company_name":"Batavia Public School District 101","role_title":"Building & Grounds Maintenance Intern","mentor_name":"Robert Schmidt, Alvin Cole","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
+    {"company_name":"Batavia Public School District 101","role_title":"Education Policy & Leadership Intern","mentor_name":"Tom Kim","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
+    {"company_name":"Batavia Public School District 101","role_title":"Business Office Operations Intern","mentor_name":"Josh Bulak","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"}
+  ];
+
+  const SELF_ENTERPRISE = [
+    {"business_name":"E-Moto Decals","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548277/wbl/logos/showcase/e-moto-decals.png","website":"https://emotodecals.com"},
+    {"business_name":"Vantage","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548278/wbl/logos/showcase/vantage.png","website":"https://vantagedecals.com"},
+    {"business_name":"Dawg House Events","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548280/wbl/logos/showcase/dawg-house-events.png","website":"https://dawghouseeventsinc.com/"},
+    {"business_name":"The Windmill Weekly","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548281/wbl/logos/showcase/windmill-weekly.png","website":"https://thewindmillweekly.com/"},
+    {"business_name":"Yelm Brands","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548283/wbl/logos/showcase/yelm-beverage-company.png","website":"https://apex-ai-solutions.b12sites.com/"}
+  ];
+
+  function esc(s) {
+    return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  document.getElementById('roster-body').innerHTML = PLACEMENTS.map((p, i) => {
+    const sub = [p.role_title, p.mentor_name].filter(Boolean).join(' · ');
+    return `
+    <div class="row">
+      <img class="row-logo" src="${esc(p.company_logo)}" alt="">
+      <div class="row-info">
+        <div class="row-name">${esc(p.company_name)}</div>
+        ${sub ? `<div class="row-sub">${esc(sub)}</div>` : ''}
+      </div>
+      <input type="text" class="name-input" placeholder="Student name" id="name-${i}" autocomplete="off">
+    </div>`;
+  }).join('');
+
+  document.getElementById('self-enterprise-body').innerHTML = SELF_ENTERPRISE.map((p, i) => `
+    <div class="row">
+      <img class="row-logo" src="${esc(p.logo_url)}" alt="">
+      <div class="row-info">
+        <div class="row-name">${esc(p.business_name)}</div>
+        ${p.website ? `<div class="row-sub"><a href="${esc(p.website)}" target="_blank" rel="noopener">${esc(p.website.replace(/^https?:\/\//,'').replace(/\/$/,''))}</a></div>` : ''}
+      </div>
+      <input type="text" class="name-input" placeholder="Student name" id="se-name-${i}" autocomplete="off">
+    </div>
+  `).join('');
+</script>
+
+</body>
+</html>
