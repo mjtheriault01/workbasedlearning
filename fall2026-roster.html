@@ -83,10 +83,11 @@
   .website-link:hover { text-decoration: underline; }
   .mentor { color: var(--gray); font-size: 12.5px; }
   .name-input {
-    width: 100%; border: none; border-bottom: 1.5px solid var(--navy);
+    display: block; width: 100%; border: none; border-bottom: 1.5px solid var(--navy);
     font-size: 14px; font-family: inherit; padding: 5px 2px;
-    background: transparent;
+    background: transparent; margin-bottom: 6px;
   }
+  .name-input:last-child { margin-bottom: 0; }
   .name-input:focus { outline: none; border-bottom-color: var(--crimson); }
 
   @media print {
@@ -176,19 +177,27 @@
     {"company_name":"Alicia Brooks Collective","role_title":"Real Estate Marketing & Client Relations Intern","mentor_name":"Alicia Brooks","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/alicia-brooks-collective.png"},
     {"company_name":"Batavia Public School District 101","role_title":"Building & Grounds Maintenance Intern","mentor_name":"Robert Schmidt, Alvin Cole","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
     {"company_name":"Batavia Public School District 101","role_title":"Education Policy & Leadership Intern","mentor_name":"Tom Kim","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
-    {"company_name":"Batavia Public School District 101","role_title":"Business Office Operations Intern","mentor_name":"Josh Bulak","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"}
+    {"company_name":"Batavia Public School District 101","role_title":"Business Office Operations Intern","mentor_name":"Josh Bulak","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
+    {"company_name":"Orbis Design","role_title":"Marketing & AI Innovation Intern","mentor_name":"Gary Ricke","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto/wbl/logos/orbis-design-v3"}
   ];
 
   const SELF_ENTERPRISE = [
     {"business_name":"E-Moto Decals","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548277/wbl/logos/showcase/e-moto-decals.png","website":"https://emotodecals.com"},
     {"business_name":"Vantage","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548278/wbl/logos/showcase/vantage.png","website":"https://vantagedecals.com"},
-    {"business_name":"Dawg House Events","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548280/wbl/logos/showcase/dawg-house-events.png","website":"https://dawghouseeventsinc.com/"},
+    {"business_name":"Dawg House Events","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548280/wbl/logos/showcase/dawg-house-events.png","website":"https://dawghouseeventsinc.com/","spots":2},
     {"business_name":"The Windmill Weekly","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548281/wbl/logos/showcase/windmill-weekly.png","website":"https://thewindmillweekly.com/"},
-    {"business_name":"Yelm Brands","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548283/wbl/logos/showcase/yelm-beverage-company.png","website":"https://apex-ai-solutions.b12sites.com/"}
+    {"business_name":"Yelm Brands","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548283/wbl/logos/showcase/yelm-beverage-company.png","website":"https://apex-ai-solutions.b12sites.com/"},
+    {"business_name":"Bulldog Media Team","logo_url":"","spots":3}
   ];
 
   function esc(s) {
     return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function nameInputs(prefix, i, spots) {
+    return Array.from({length: spots || 1}, (_, s) =>
+      `<input type="text" class="name-input" placeholder="Student name" id="${prefix}-${i}-${s}" autocomplete="off">`
+    ).join('');
   }
 
   document.getElementById('roster-body').innerHTML = PLACEMENTS.map((p, i) => `
@@ -199,18 +208,18 @@
         ${p.role_title ? `<div class="role">${esc(p.role_title)}</div>` : ''}
       </td>
       <td class="mentor">${esc(p.mentor_name || '')}</td>
-      <td><input type="text" class="name-input" placeholder="Student name" id="name-${i}" autocomplete="off"></td>
+      <td>${nameInputs('name', i, p.spots)}</td>
     </tr>
   `).join('');
 
   document.getElementById('self-enterprise-body').innerHTML = SELF_ENTERPRISE.map((p, i) => `
     <tr>
-      <td class="logo-cell"><img src="${esc(p.logo_url)}" alt=""></td>
+      <td class="logo-cell">${p.logo_url ? `<img src="${esc(p.logo_url)}" alt="">` : '<div style="width:50px;height:50px;border:1px dashed var(--line);border-radius:6px;"></div>'}</td>
       <td>
         <div class="company">${esc(p.business_name)}</div>
         ${p.website ? `<a class="website-link" href="${esc(p.website)}" target="_blank" rel="noopener">${esc(p.website.replace(/^https?:\/\//,'').replace(/\/$/,''))}</a>` : ''}
       </td>
-      <td><input type="text" class="name-input" placeholder="Student name" id="se-name-${i}" autocomplete="off"></td>
+      <td>${nameInputs('se-name', i, p.spots)}</td>
     </tr>
   `).join('');
 </script>
