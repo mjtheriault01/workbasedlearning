@@ -246,19 +246,20 @@
     ];
     let _activeCluster = 'all';
 
-    function listingClusters(p) {
-      return (p.industry || '').split(',').map(s => s.trim());
-    }
-
+    // NOTE: match by substring, not by splitting industry on comma -- two of the 7
+    // cluster labels themselves contain a comma ("Manufacturing, Engineering & Trades",
+    // "Agriculture, Food & Natural Resources"), so a naive comma-split shreds those into
+    // fragments that match nothing. None of the 7 labels are a substring of another, so
+    // plain .includes() is safe and correct for both single- and multi-cluster listings.
     function partnerMatchesCluster(p, clusterId) {
       if (clusterId === 'all') return true;
       const cluster = CLUSTERS.find(c => c.id === clusterId);
-      return listingClusters(p).includes(cluster.label);
+      return (p.industry || '').includes(cluster.label);
     }
 
     function getClusterAccent(p) {
-      const tags = listingClusters(p);
-      const match = CLUSTERS.find(c => tags.includes(c.label));
+      const industry = p.industry || '';
+      const match = CLUSTERS.find(c => industry.includes(c.label));
       return match ? match.color : '#AC161D';
     }
 
