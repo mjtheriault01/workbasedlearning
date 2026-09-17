@@ -41,7 +41,7 @@
     font-size: 13px; color: var(--gray); line-height: 1.5;
   }
   .sheet {
-    max-width: 900px; margin: 20px auto 60px; background: #fff;
+    max-width: 900px; margin: 20px auto 32px; background: #fff;
     padding: 32px; box-shadow: 0 1px 4px rgba(0,0,0,0.12);
   }
   .sheet-title { font-size: 22px; font-weight: 800; margin: 0 0 4px; }
@@ -57,6 +57,8 @@
     font-size: 14px; vertical-align: top;
   }
   tr:nth-child(even) td { background: #fafafa; }
+  .logo-cell { width: 56px; }
+  .logo-cell img { width: 48px; height: 48px; object-fit: contain; border: 1px solid var(--line); border-radius: 4px; background: #fff; padding: 3px; }
   .company { font-weight: 700; }
   .role { color: var(--gray); font-size: 12.5px; margin-top: 2px; }
   .mentor { color: var(--gray); font-size: 12px; }
@@ -70,7 +72,8 @@
   @media print {
     .toolbar, .note { display: none; }
     body { background: #fff; }
-    .sheet { box-shadow: none; margin: 0; padding: 0; max-width: none; }
+    .sheet { box-shadow: none; margin: 0 0 24px; padding: 0; max-width: none; }
+    .sheet + .sheet { page-break-before: always; }
     tr:nth-child(even) td { background: transparent; }
     .name-input { border-bottom: 1px solid #000; }
     table { page-break-inside: auto; }
@@ -96,48 +99,72 @@
   </p>
 
   <div class="sheet">
-    <p class="sheet-title">Fall 2026 Field Experience Placements</p>
+    <p class="sheet-title">Fall 2026 Business Partner Placements</p>
     <p class="sheet-sub">Business partner, role, and mentor — write in each student's name before printing.</p>
     <table>
       <thead>
         <tr>
-          <th style="width:34%">Business &amp; Career</th>
-          <th style="width:26%">Mentor</th>
-          <th style="width:40%">Student Name</th>
+          <th class="logo-cell"></th>
+          <th style="width:32%">Business &amp; Career</th>
+          <th style="width:24%">Mentor</th>
+          <th style="width:38%">Student Name</th>
         </tr>
       </thead>
       <tbody id="roster-body"></tbody>
     </table>
   </div>
 
+  <div class="sheet">
+    <p class="sheet-title">Fall 2026 Self Enterprise Students</p>
+    <p class="sheet-sub">Student-run businesses — write in each student's name before printing.</p>
+    <table>
+      <thead>
+        <tr>
+          <th class="logo-cell"></th>
+          <th style="width:56%">Business</th>
+          <th style="width:38%">Student Name</th>
+        </tr>
+      </thead>
+      <tbody id="self-enterprise-body"></tbody>
+    </table>
+  </div>
+
 <script>
   const PLACEMENTS = [
-    {"company_name":"Alicia Brooks Collective","role_title":"Real Estate Marketing & Client Relations Intern","mentor_name":"Alicia Brooks"},
-    {"company_name":"Batavia Police Department","role_title":"Law Enforcement & Public Safety Field Experience","mentor_name":"Officer Saad"},
-    {"company_name":"Batavia Public Library","role_title":"Graphic Design & Marketing Intern","mentor_name":"Cesar Orozco"},
-    {"company_name":"Bob Jass Chevrolet","role_title":"Automotive Service Technician Apprentice","mentor_name":"Mike Kallembach"},
-    {"company_name":"BPS 101 Athletics","role_title":"Athletic Program & Operations Intern","mentor_name":"Mark Anderson"},
-    {"company_name":"BPS 101 Building & Grounds","role_title":"Building & Grounds Maintenance Intern","mentor_name":"Robert Schmidt"},
-    {"company_name":"BPS 101 Superintendent","role_title":"Education Policy & Leadership Intern","mentor_name":"Tom Kim"},
-    {"company_name":"BPS101 Athletic Training","role_title":"Athletic Training Student Aide","mentor_name":"Zac Roberts, Jake Reist"},
-    {"company_name":"BPS101 Business","role_title":"Business Office Operations Intern","mentor_name":"Josh Bulak"},
-    {"company_name":"BPS101 Communications","role_title":"Social Media & Content Creator Intern","mentor_name":"Holly Deitchman"},
-    {"company_name":"BPS101 Nursing","role_title":"School Nursing Intern","mentor_name":"Kelii Coonrod"},
-    {"company_name":"BPS101 Technology Department","role_title":"IT Help Desk Technician","mentor_name":"David Thurlby & Rob Luxton & Lynn Bartolotta"},
-    {"company_name":"Bulldog Plumbing","role_title":"Plumbing & Pipefitting Apprentice Intern","mentor_name":"Doug Saam"},
-    {"company_name":"Donat & Donat","role_title":"Legal & Administrative Intern","mentor_name":"Kate Donat Iturralde"},
-    {"company_name":"Drendel & Jansons Law Group","role_title":"Legal Administrative Support Intern","mentor_name":"Ed Boula & Kevin Drendel"},
-    {"company_name":"Easter Seals","role_title":"Pediatric Therapy Clinic Intern","mentor_name":"Wendy Lirgameris"},
-    {"company_name":"Fire 'n' Ice HVAC","role_title":"HVAC Shop & Logistics Assistant Intern","mentor_name":"Casey Michalek"},
-    {"company_name":"J DeCarlo Salon and Spa","role_title":"Cosmetology & Salon Operations Field Experience","mentor_name":"Emily"},
-    {"company_name":"Orbis Design","role_title":"Marketing & AI Innovation Intern","mentor_name":"Gary Ricke"},
-    {"company_name":"Organic Life","role_title":"Food Service & Kitchen Operations Intern","mentor_name":"Anne Hjelmberg (BHS Kitchen Manager), Also Tony Lopez"},
-    {"company_name":"Physical Therapy Advantage","role_title":"Physical Therapy Patient Care Intern","mentor_name":"Joe King"},
-    {"company_name":"Richards-Wilcox, Inc.","role_title":"Mechanical & Design Engineering Intern","mentor_name":"Tracy Mikes"},
-    {"company_name":"Smith & Richardson","role_title":"Manufacturing Engineering Intern","mentor_name":"Ron Brown"},
-    {"company_name":"The Cosentino Law Firm, LLC","role_title":"Legal Administrative & Research Intern","mentor_name":"Chris Cosentino"},
-    {"company_name":"VSW","role_title":"Program Assistant Intern (Occupational Therapy, Social Work, Recreation Management, Business)","mentor_name":"Megan Saltijeral, Hugo Saltijeral"},
-    {"company_name":"Why Rent Real Estate","role_title":"Real Estate Marketing & Client Relations Intern","mentor_name":"Mayra Perez"}
+    {"company_name":"Alicia Brooks Collective","role_title":"Real Estate Marketing & Client Relations Intern","mentor_name":"Alicia Brooks","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/alicia-brooks-collective.png"},
+    {"company_name":"Law Enforcement Exposure Experience","role_title":"Law Enforcement & Public Safety Field Experience","mentor_name":"Officer Saad","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/law-enforcement-exposure.png"},
+    {"company_name":"Batavia Public Library","role_title":"Graphic Design & Marketing Intern","mentor_name":"Cesar Orozco","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,h_72/wbl/logos/batavia-library"},
+    {"company_name":"Bob Jass Chevrolet","role_title":"Automotive Service Technician Apprentice","mentor_name":"Mike Kallembach","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bob-jass-chevrolet.png"},
+    {"company_name":"BPS 101 Athletics","role_title":"Athletic Program & Operations Intern","mentor_name":"Mark Anderson","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
+    {"company_name":"BPS 101 Building & Grounds","role_title":"Building & Grounds Maintenance Intern","mentor_name":"Robert Schmidt","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
+    {"company_name":"BPS 101 Superintendent","role_title":"Education Policy & Leadership Intern","mentor_name":"Tom Kim","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
+    {"company_name":"BPS101 Athletic Training","role_title":"Athletic Training Student Aide","mentor_name":"Zac Roberts, Jake Reist","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
+    {"company_name":"BPS101 Business","role_title":"Business Office Operations Intern","mentor_name":"Josh Bulak","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
+    {"company_name":"BPS101 Communications","role_title":"Social Media & Content Creator Intern","mentor_name":"Holly Deitchman","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
+    {"company_name":"BPS101 Nursing","role_title":"School Nursing Intern","mentor_name":"Kelii Coonrod","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
+    {"company_name":"BPS101 Technology Department","role_title":"IT Help Desk Technician","mentor_name":"David Thurlby & Rob Luxton & Lynn Bartolotta","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/bps101-district.png"},
+    {"company_name":"Bulldog Plumbing","role_title":"Plumbing & Pipefitting Apprentice Intern","mentor_name":"Doug Saam","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,h_72/wbl/logos/bulldog-plumbing"},
+    {"company_name":"Donat & Donat","role_title":"Legal & Administrative Intern","mentor_name":"Kate Donat Iturralde","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/donat-donat.png"},
+    {"company_name":"Drendel & Jansons Law Group","role_title":"Legal Administrative Support Intern","mentor_name":"Ed Boula & Kevin Drendel","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/v1789067780/wbl/logos/drendel-jansons.png"},
+    {"company_name":"Easter Seals","role_title":"Pediatric Therapy Clinic Intern","mentor_name":"Wendy Lirgameris","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto/wbl/logos/easter-seals-v3"},
+    {"company_name":"Fire 'n' Ice HVAC","role_title":"HVAC Shop & Logistics Assistant Intern","mentor_name":"Casey Michalek","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,h_72/wbl/logos/firnice-hvac"},
+    {"company_name":"J DeCarlo Salon and Spa","role_title":"Cosmetology & Salon Operations Field Experience","mentor_name":"Emily","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/jdecarlo-salon-spa.png"},
+    {"company_name":"Orbis Design","role_title":"Marketing & AI Innovation Intern","mentor_name":"Gary Ricke","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto/wbl/logos/orbis-design-v3"},
+    {"company_name":"Organic Life","role_title":"Food Service & Kitchen Operations Intern","mentor_name":"Anne Hjelmberg (BHS Kitchen Manager), Also Tony Lopez","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/f_auto,q_auto,h_72/wbl/logos/organic-life"},
+    {"company_name":"Physical Therapy Advantage","role_title":"Physical Therapy Patient Care Intern","mentor_name":"Joe King","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/physical-therapy-advantage.png"},
+    {"company_name":"Richards-Wilcox, Inc.","role_title":"Mechanical & Design Engineering Intern","mentor_name":"Tracy Mikes","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/v1789067782/wbl/logos/richards-wilcox.png"},
+    {"company_name":"Smith & Richardson","role_title":"Manufacturing Engineering Intern","mentor_name":"Ron Brown","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/smith-richardson.png"},
+    {"company_name":"The Cosentino Law Firm, LLC","role_title":"Legal Administrative & Research Intern","mentor_name":"Chris Cosentino","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/wbl/logos/launch-fall2026/cosentino-law-firm.png"},
+    {"company_name":"VSW","role_title":"Program Assistant Intern (Occupational Therapy, Social Work, Recreation Management, Business)","mentor_name":"Megan Saltijeral, Hugo Saltijeral","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/v1788542191/wbl/logos/ovzuaarqlon2u5vkyjif.webp"},
+    {"company_name":"Why Rent Real Estate","role_title":"Real Estate Marketing & Client Relations Intern","mentor_name":"Mayra Perez","company_logo":"https://res.cloudinary.com/dikkdclum/image/upload/v1789067783/wbl/logos/why-rent-real-estate.png"}
+  ];
+
+  const SELF_ENTERPRISE = [
+    {"business_name":"E-Moto Decals","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548277/wbl/logos/showcase/e-moto-decals.png"},
+    {"business_name":"Vantage","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548278/wbl/logos/showcase/vantage.png"},
+    {"business_name":"Dawg House Events","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548280/wbl/logos/showcase/dawg-house-events.png"},
+    {"business_name":"The Windmill Weekly","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548281/wbl/logos/showcase/windmill-weekly.png"},
+    {"business_name":"Yelm Brands","logo_url":"https://res.cloudinary.com/dikkdclum/image/upload/v1788548283/wbl/logos/showcase/yelm-beverage-company.png"}
   ];
 
   function esc(s) {
@@ -146,12 +173,21 @@
 
   document.getElementById('roster-body').innerHTML = PLACEMENTS.map((p, i) => `
     <tr>
+      <td class="logo-cell">${p.company_logo ? `<img src="${esc(p.company_logo)}" alt="">` : ''}</td>
       <td>
         <div class="company">${esc(p.company_name)}</div>
         <div class="role">${esc(p.role_title)}</div>
       </td>
       <td class="mentor">${esc(p.mentor_name || '')}</td>
       <td><input type="text" class="name-input" placeholder="Student name" id="name-${i}" autocomplete="off"></td>
+    </tr>
+  `).join('');
+
+  document.getElementById('self-enterprise-body').innerHTML = SELF_ENTERPRISE.map((p, i) => `
+    <tr>
+      <td class="logo-cell"><img src="${esc(p.logo_url)}" alt=""></td>
+      <td><div class="company">${esc(p.business_name)}</div></td>
+      <td><input type="text" class="name-input" placeholder="Student name" id="se-name-${i}" autocomplete="off"></td>
     </tr>
   `).join('');
 </script>
