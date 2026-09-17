@@ -51,28 +51,25 @@
     .animate-in { animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; }
 
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100; display: none; opacity: 0; transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1); }
-    .modal-backdrop.active { display: flex; opacity: 1; }
-    .modal-content { transform: translateY(40px); opacity: 0; transition: all 0.5s cubic-bezier(0.16,1,0.3,1); transition-delay: 0.1s; }
-    .modal-backdrop.active .modal-content { transform: translateY(0); opacity: 1; }
-
-    .partner-hero-section { position: relative; height: 260px; flex-shrink: 0; overflow: hidden; }
-    .partner-hero-bg { position: absolute; inset: -8%; width: 116%; height: 116%; background-size: cover; background-position: center; will-change: transform; }
-    .partner-hero-gradient { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.06) 0%, rgba(3,7,18,0.82) 100%); }
-    .partner-hero-close { position: absolute; top: 14px; right: 14px; z-index: 10; width: 38px; height: 38px; border-radius: 50%; background: rgba(0,0,0,0.40); backdrop-filter: blur(6px); border: 1.5px solid rgba(255,255,255,0.20); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
-    .partner-hero-close:hover { background: rgba(0,0,0,0.65); }
-
     .cta-primary { box-shadow: 0 4px 16px rgba(172,22,29,0.30); transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease, filter 0.15s ease !important; }
     .cta-primary:hover { transform: translateY(-2px) !important; box-shadow: 0 10px 28px rgba(172,22,29,0.42) !important; filter: brightness(1.06); }
     .cta-primary:active { transform: translateY(0) scale(0.98) !important; box-shadow: 0 2px 8px rgba(172,22,29,0.22) !important; transition-duration: 0.06s !important; }
 
     .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
-    /* Editorial partner row */
-    .partner-row-panel { position: relative; overflow: hidden; aspect-ratio: 4/3; }
-    .partner-row-panel img { transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
-    .partner-row:hover .partner-row-panel img { transform: scale(1.06); }
-    .partner-row-flatbg { background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 2px, transparent 2px, transparent 14px); }
+    /* Button board tiles */
+    .partner-tile {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      gap: 0.65rem; padding: 1.5rem 1rem; border-radius: 1rem;
+      border: 1.5px solid #e5e5e5; background: #ffffff;
+      transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .partner-tile:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.10); border-color: transparent; }
+    .partner-tile-logo {
+      width: 100%; height: 76px; display: flex; align-items: center; justify-content: center;
+      border-radius: 0.6rem; overflow: hidden;
+    }
+    .partner-tile-logo img { max-width: 88%; max-height: 88%; object-fit: contain; }
 
     /* Cluster filter pills */
     .cluster-pill {
@@ -171,7 +168,7 @@
         <span class="text-sm font-heading font-medium">Loading partners...</span>
       </div>
       <div id="directory-empty" class="hidden text-center text-navy-400 italic py-16">No partners published yet.</div>
-      <div id="directory-list" class="hidden"></div>
+      <div id="directory-list" class="hidden grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
     </div>
   </main>
 
@@ -221,44 +218,6 @@
     </div>
   </footer>
 
-  <!-- ── Partner Spotlight Modal (shared with homepage) ── -->
-  <div id="modal-partner" class="modal-backdrop items-end justify-center md:items-center md:p-6">
-    <div class="modal-content w-full max-w-2xl md:max-h-[88vh] md:rounded-2xl overflow-hidden shadow-2xl flex flex-col bg-navy-950" style="max-height:92vh;">
-      <div class="partner-hero-section">
-        <div id="partner-hero-bg" class="partner-hero-bg"></div>
-        <div class="partner-hero-gradient"></div>
-        <button onclick="closePartnerModal()" class="partner-hero-close">
-          <svg class="w-4 h-4" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-        <div class="absolute bottom-0 left-0 right-0 p-6">
-          <div class="flex items-end gap-4">
-            <div id="partner-logo-wrap" class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg overflow-hidden"></div>
-            <div class="flex-1 min-w-0">
-              <p id="partner-sector" class="text-xs uppercase tracking-widest text-gold-400 font-semibold mb-1"></p>
-              <h2 id="partner-modal-name" class="font-heading text-2xl font-black text-white leading-tight" style="text-shadow:0 1px 16px rgba(0,0,0,0.6)"></h2>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-6 overflow-y-auto flex-1 space-y-5 bg-navy-950">
-        <p id="partner-modal-desc" class="text-navy-200 leading-relaxed text-sm"></p>
-        <div>
-          <p class="text-xs uppercase tracking-widest text-navy-400 font-semibold mb-3">Partnership Types</p>
-          <div id="partner-modal-types" class="flex flex-wrap gap-2"></div>
-        </div>
-        <div class="pt-2 flex flex-col gap-3">
-          <a id="partner-modal-website" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm text-navy-300 hover:text-white transition-colors">
-            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-            <span></span>
-          </a>
-          <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="w-full bg-crimson-800 text-white py-4 text-sm font-bold uppercase tracking-wider hover:bg-crimson-700 transition-colors cta-primary">
-            Become a Partner Like This →
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
     const SUPABASE_URL = 'https://bsgrkpykysvqcdqikcym.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzZ3JrcHlreXN2cWNkcWlrY3ltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MTE5NzUsImV4cCI6MjA5NTA4Nzk3NX0.brdA4f7v0GC89fRXPTVPZV11KIdZxXyCkLTWWsoe0o0';
@@ -273,25 +232,34 @@
       return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
-    // Matches the 7 FE career clusters (cluster-*.html) by keyword rather than exact string,
-    // since partners.industry values aren't consistently worded ("Finance & Business" vs
-    // "Business & Finance", "Arts and Communication" vs "Arts & Communication", etc.)
+    // The 7 real FE career clusters (cluster-*.html). job_listings.industry is a
+    // comma-separated list of these exact labels (normalized 2026-09-16) -- exact
+    // matching per cluster, not keyword guessing.
     const CLUSTERS = [
-      { id: 'agriculture',    label: 'Agriculture, Food & Natural Resources', color: '#2d6a4f', keywords: ['agricultur'] },
-      { id: 'arts',           label: 'Arts & Communication',                  color: '#7b2d8b', keywords: ['arts', 'communication'] },
-      { id: 'finance',        label: 'Finance & Business',                    color: '#1a3a5c', keywords: ['finance', 'business'] },
-      { id: 'health',         label: 'Health Sciences',                      color: '#AC161D', keywords: ['health'] },
-      { id: 'human',          label: 'Human & Public Services',               color: '#c47a15', keywords: ['human', 'public service'] },
-      { id: 'it',             label: 'Information Technology',                color: '#0f4c75', keywords: ['information technology', 'technology dept'] },
-      { id: 'manufacturing',  label: 'Manufacturing, Engineering & Trades',   color: '#5a3e1b', keywords: ['manufactur', 'engineering', 'trades'] },
+      { id: 'agriculture',    label: 'Agriculture, Food & Natural Resources', color: '#2d6a4f' },
+      { id: 'arts',           label: 'Arts & Communication',                  color: '#7b2d8b' },
+      { id: 'finance',        label: 'Finance & Business',                    color: '#1a3a5c' },
+      { id: 'health',         label: 'Health Sciences',                      color: '#AC161D' },
+      { id: 'human',          label: 'Human & Public Services',               color: '#c47a15' },
+      { id: 'it',             label: 'Information Technology',                color: '#0f4c75' },
+      { id: 'manufacturing',  label: 'Manufacturing, Engineering & Trades',   color: '#5a3e1b' },
     ];
     let _activeCluster = 'all';
+
+    function listingClusters(p) {
+      return (p.industry || '').split(',').map(s => s.trim());
+    }
 
     function partnerMatchesCluster(p, clusterId) {
       if (clusterId === 'all') return true;
       const cluster = CLUSTERS.find(c => c.id === clusterId);
-      const industry = (p.industry || '').toLowerCase();
-      return cluster.keywords.some(kw => industry.includes(kw));
+      return listingClusters(p).includes(cluster.label);
+    }
+
+    function getClusterAccent(p) {
+      const tags = listingClusters(p);
+      const match = CLUSTERS.find(c => tags.includes(c.label));
+      return match ? match.color : '#AC161D';
     }
 
     function renderClusterFilters() {
@@ -313,66 +281,36 @@
     function setClusterFilter(clusterId) {
       _activeCluster = clusterId;
       updateClusterButtonStates();
-      const rows = document.querySelectorAll('.partner-row');
+      const tiles = document.querySelectorAll('.partner-tile');
       let shown = 0;
-      rows.forEach((row, i) => {
-        const match = partnerMatchesCluster(_allPartners[i], clusterId);
-        row.classList.toggle('hidden', !match);
+      tiles.forEach((tile, i) => {
+        const match = partnerMatchesCluster(_allListings[i], clusterId);
+        tile.classList.toggle('hidden', !match);
         if (match) shown++;
       });
       const countEl = document.getElementById('cluster-count');
       countEl.textContent = clusterId === 'all'
-        ? `Showing all ${_allPartners.length} partners`
-        : `Showing ${shown} of ${_allPartners.length} partners`;
+        ? `Showing all ${_allListings.length} partners`
+        : `Showing ${shown} of ${_allListings.length} partners`;
     }
 
-    const INDUSTRY_ACCENTS = {
-      'skilled trades': '#b45309', 'manufacturing': '#b45309', 'engineering': '#b45309',
-      'health': '#0d9488', 'nonprofit': '#7c3aed', 'information technology': '#2563eb',
-      'arts': '#db2777', 'communications': '#db2777', 'finance': '#16a34a',
-      'business': '#16a34a', 'food': '#ea580c', 'human': '#9333ea', 'public services': '#9333ea',
-      'agriculture': '#65a30d',
-    };
-    function getIndustryAccent(industry) {
-      const key = Object.keys(INDUSTRY_ACCENTS).find(k => (industry || '').toLowerCase().includes(k));
-      return key ? INDUSTRY_ACCENTS[key] : '#AC161D';
-    }
+    let _allListings = [];
 
-    let _allPartners = [];
-
-    function buildPartnerRow(p, idx) {
+    function buildPartnerTile(p) {
       const logo = p.company_logo || '';
-      const name = (p.company_name || '').toLowerCase();
-      const isBPS = name.includes('batavia public school') || name === 'bps 101' || name === 'bps101';
-      const logoBg = p.logo_bg || (isBPS ? '#AC161D' : p.dark_card ? '#1a1a2e' : '#f8f8f8');
-      const accent = getIndustryAccent(p.industry);
-      const imgOnRight = idx % 2 === 1;
-
-      const panel = p.hero_image
-        ? `<div class="partner-row-panel rounded-2xl">
-             <img src="${esc(p.hero_image)}" alt="${esc(p.company_name)}" class="absolute inset-0 w-full h-full object-cover">
-             <div class="absolute inset-0 bg-gradient-to-t from-navy-950/70 via-transparent to-transparent"></div>
-             <div class="absolute bottom-4 left-4 w-14 h-14 rounded-lg shadow-lg overflow-hidden flex items-center justify-center" style="background:${logoBg}">
-               ${logo ? `<img src="${esc(logo)}" alt="" class="w-full h-full object-contain p-1.5">` : ''}
-             </div>
-           </div>`
-        : `<div class="partner-row-panel partner-row-flatbg rounded-2xl flex items-center justify-center" style="background:${accent}">
-             ${logo ? `<img src="${esc(logo)}" alt="${esc(p.company_name)}" class="max-h-24 max-w-[60%] object-contain">` : `<span class="font-heading font-black text-4xl text-white/70">${esc((p.company_name||'').slice(0,2).toUpperCase())}</span>`}
-           </div>`;
+      const accent = getClusterAccent(p);
+      const logoBlock = logo
+        ? `<div class="partner-tile-logo" style="background:#f8f8f8"><img src="${esc(logo)}" alt="${esc(p.company_name)}"></div>`
+        : `<div class="partner-tile-logo" style="background:${accent}"><span class="font-heading font-black text-2xl text-white/85">${esc((p.company_name||'').slice(0,2).toUpperCase())}</span></div>`;
 
       return `
-        <div class="partner-row group grid md:grid-cols-2 gap-6 md:gap-12 items-center mb-14 md:mb-20 cursor-pointer" onclick="openPartnerModal(${idx})">
-          <div class="${imgOnRight ? 'md:order-2' : ''}">${panel}</div>
-          <div class="${imgOnRight ? 'md:order-1' : ''}">
-            ${p.industry ? `<p class="text-xs uppercase tracking-widest font-semibold mb-3" style="color:${accent}">${esc(p.industry)}</p>` : ''}
-            <h2 class="font-heading text-2xl md:text-3xl font-bold tracking-tight text-navy-900 mb-3 group-hover:text-crimson-800 transition-colors">${esc(p.company_name)}</h2>
-            <p class="text-navy-600 leading-relaxed line-clamp-3 mb-4">${esc(p.description) || 'A Batavia-area business partnering with BHS students.'}</p>
-            <span class="inline-flex items-center gap-2 text-sm font-semibold text-crimson-800">
-              View Partner
-              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </span>
+        <a href="${esc(p.company_website || '#')}" target="_blank" rel="noopener" class="partner-tile">
+          ${logoBlock}
+          <div>
+            <p class="font-heading font-bold text-navy-900 text-sm leading-snug">${esc(p.company_name)}</p>
+            <p class="text-navy-400 text-xs mt-1 leading-snug">${esc(p.role_title || '')}</p>
           </div>
-        </div>`;
+        </a>`;
     }
 
     async function loadDirectory() {
@@ -381,7 +319,7 @@
       const list    = document.getElementById('directory-list');
 
       const { data, error } = await db
-        .from('partners')
+        .from('job_listings')
         .select('*')
         .eq('is_active', true)
         .order('company_name');
@@ -392,70 +330,12 @@
         return;
       }
 
-      _allPartners = data;
-      list.innerHTML = data.map((p, i) => buildPartnerRow(p, i)).join('');
+      _allListings = data;
+      list.innerHTML = data.map(p => buildPartnerTile(p)).join('');
       list.classList.remove('hidden');
       renderClusterFilters();
       setClusterFilter(_activeCluster);
     }
-
-    function openPartnerModal(idx) {
-      const p = _allPartners[idx];
-      if (!p) return;
-
-      const modal = document.getElementById('modal-partner');
-      const heroBg = document.getElementById('partner-hero-bg');
-      const logoWrap = document.getElementById('partner-logo-wrap');
-      const sectorEl = document.getElementById('partner-sector');
-      const nameEl = document.getElementById('partner-modal-name');
-      const descEl = document.getElementById('partner-modal-desc');
-      const typesEl = document.getElementById('partner-modal-types');
-      const websiteLink = document.getElementById('partner-modal-website');
-
-      const logo = p.company_logo || '';
-      const hero = p.hero_image || '';
-
-      heroBg.style.backgroundImage = hero ? `url('${hero}')` : 'none';
-      heroBg.style.background = hero ? '' : getIndustryAccent(p.industry);
-
-      const name = (p.company_name || '').toLowerCase();
-      const isBPS = name.includes('batavia public school') || name === 'bps 101' || name === 'bps101';
-      const logoBg = p.logo_bg || (isBPS ? '#AC161D' : p.dark_card ? '#000000' : '#ffffff');
-      logoWrap.style.background = logoBg;
-      logoWrap.style.overflow = 'hidden';
-      logoWrap.innerHTML = logo ? `<img src="${esc(logo)}" alt="${esc(p.company_name)}" class="w-full h-full object-contain p-1.5">` : '';
-      sectorEl.textContent = p.industry || '';
-      nameEl.textContent = p.company_name || '';
-      descEl.textContent = p.description || '';
-
-      const types = (p.partnership_types || '').split(',').map(t => t.trim()).filter(Boolean);
-      typesEl.innerHTML = types.map(t =>
-        `<span class="inline-block bg-white/10 text-white/80 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider border border-white/15">${esc(t)}</span>`
-      ).join('');
-
-      if (p.company_website) {
-        websiteLink.href = p.company_website;
-        websiteLink.querySelector('span').textContent = `Visit ${p.company_name} →`;
-        websiteLink.style.display = 'inline-flex';
-      } else {
-        websiteLink.style.display = 'none';
-      }
-
-      document.body.style.overflow = 'hidden';
-      modal.style.display = 'flex';
-      modal.offsetHeight;
-      modal.classList.add('active');
-    }
-
-    function closePartnerModal() {
-      const modal = document.getElementById('modal-partner');
-      modal.classList.remove('active');
-      setTimeout(() => { modal.style.display = 'none'; document.body.style.overflow = ''; }, 400);
-    }
-
-    document.getElementById('modal-partner').addEventListener('click', e => {
-      if (e.target.id === 'modal-partner') closePartnerModal();
-    });
 
     loadDirectory();
   </script>

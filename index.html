@@ -1047,50 +1047,23 @@
     </div>
   </section>
 
-  <!-- Partner Businesses Section (teaser — full directory lives on partners.html) -->
-  <section id="partners" class="py-24 md:py-32 px-6 md:px-8 bg-navy-50">
-    <div class="max-w-7xl mx-auto">
-
+  <!-- Partner Testimonials (full partner directory lives on partners.html now) -->
+  <section id="testimonials" class="py-24 md:py-32 px-6 md:px-8 bg-navy-50">
+    <div class="max-w-4xl mx-auto">
       <div class="text-center mb-16">
         <p class="text-sm uppercase tracking-widest text-crimson-800 font-semibold mb-4">Our Partners</p>
         <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 mb-4">
-          Businesses Already On Board
+          What Our Partners Say
         </h2>
-        <p class="text-lg text-navy-600 max-w-2xl mx-auto">
-          These Batavia-area businesses are investing in the next generation. Want to join them?
-        </p>
       </div>
-
-      <!-- Partner Grid preview (dynamic via Supabase, first several only) -->
-      <div id="partners-loading" class="flex items-center gap-3 text-navy-400 py-8">
+      <div id="testimonials-loading" class="flex items-center justify-center gap-3 text-navy-400 py-8">
         <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
         </svg>
-        <span class="text-sm font-heading font-medium">Loading partners...</span>
+        <span class="text-sm font-heading font-medium">Loading testimonials...</span>
       </div>
-      <div id="partners-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-12 hidden"></div>
-
-      <div class="text-center mb-16">
-        <a href="partners.html" class="inline-flex items-center gap-2 border-2 border-navy-900 text-navy-900 px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-navy-900 hover:text-white transition-colors cta-outline">
-          See All Our Partners
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-        </a>
-      </div>
-
-      <!-- Partner Testimonials (dynamic via Supabase) -->
-      <div class="max-w-4xl mx-auto">
-        <h3 class="font-heading text-xl font-bold text-navy-900 mb-8 text-center">What Our Partners Say</h3>
-        <div id="testimonials-loading" class="flex items-center justify-center gap-3 text-navy-400 py-8">
-          <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-          </svg>
-          <span class="text-sm font-heading font-medium">Loading testimonials...</span>
-        </div>
-        <div id="testimonials-grid" class="grid md:grid-cols-2 gap-8 hidden"></div>
-      </div>
-
+      <div id="testimonials-grid" class="grid md:grid-cols-2 gap-8 hidden"></div>
     </div>
   </section>
 
@@ -2651,114 +2624,7 @@
       }
     });
 
-    // ── Partner data (populated dynamically from Supabase) ───────────────────
-    let _allPartners = [];
-
-    function openPartnerModal(idx) {
-      const p = _allPartners[idx];
-      if (!p) return;
-
-      const modal = document.getElementById('modal-partner');
-      const heroBg = document.getElementById('partner-hero-bg');
-      const logoWrap = document.getElementById('partner-logo-wrap');
-      const sectorEl = document.getElementById('partner-sector');
-      const nameEl = document.getElementById('partner-modal-name');
-      const descEl = document.getElementById('partner-modal-desc');
-      const typesEl = document.getElementById('partner-modal-types');
-      const websiteLink = document.getElementById('partner-modal-website');
-
-      const logo = p.company_logo || (p.company_website ? `https://logo.clearbit.com/${new URL(p.company_website).hostname}` : '');
-      const hero = p.hero_image || '';
-
-      if (hero) heroBg.style.backgroundImage = `url('${hero}')`;
-      const logoBg = p.logo_bg || ((p.company_name || '').toLowerCase().includes('bps') ? '#AC161D' : p.dark_card ? '#000000' : '#ffffff');
-      logoWrap.style.background = logoBg;
-      logoWrap.style.overflow = 'hidden';
-      logoWrap.innerHTML = logo ? `<img src="${logo}" alt="${p.company_name || ''}" class="w-full h-full object-contain p-1.5">` : '';
-      sectorEl.textContent = p.industry || '';
-      nameEl.textContent = p.company_name || '';
-      descEl.textContent = p.description || '';
-
-      const types = (p.partnership_types || '').split(',').map(t => t.trim()).filter(Boolean);
-      typesEl.innerHTML = types.map(t =>
-        `<span class="inline-block bg-white/10 text-white/80 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider border border-white/15">${t}</span>`
-      ).join('');
-
-      if (p.company_website) {
-        websiteLink.href = p.company_website;
-        websiteLink.textContent = `Visit ${p.company_name} →`;
-        websiteLink.style.display = 'inline-flex';
-      } else {
-        websiteLink.style.display = 'none';
-      }
-
-      document.body.style.overflow = 'hidden';
-      modal.style.display = 'flex';
-      modal.offsetHeight;
-      modal.classList.add('active');
-    }
-
-    function closePartnerModal() {
-      const modal = document.getElementById('modal-partner');
-      modal.classList.remove('active');
-      setTimeout(() => { modal.style.display = 'none'; document.body.style.overflow = ''; }, 400);
-    }
-
-    document.getElementById('modal-partner').addEventListener('click', e => {
-      if (e.target.id === 'modal-partner') closePartnerModal();
-    });
   </script>
-
-  <!-- ── Partner Spotlight Modal ── -->
-  <div id="modal-partner" class="modal-backdrop items-end justify-center md:items-center md:p-6">
-    <div class="modal-content w-full max-w-2xl md:max-h-[88vh] md:rounded-2xl overflow-hidden shadow-2xl flex flex-col bg-navy-950" style="max-height:92vh;">
-
-      <!-- Hero with Ken Burns -->
-      <div class="partner-hero-section">
-        <div id="partner-hero-bg" class="partner-hero-bg ken-burns"></div>
-        <div class="partner-hero-gradient"></div>
-        <button onclick="closePartnerModal()" class="partner-hero-close">
-          <svg class="w-4 h-4" fill="none" stroke="white" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-        <!-- Identity overlay at bottom of hero -->
-        <div class="absolute bottom-0 left-0 right-0 p-6">
-          <div class="flex items-end gap-4">
-            <div id="partner-logo-wrap" class="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg overflow-hidden"></div>
-            <div class="flex-1 min-w-0">
-              <p id="partner-sector" class="text-xs uppercase tracking-widest text-gold-400 font-semibold mb-1"></p>
-              <h2 id="partner-modal-name" class="font-heading text-2xl font-black text-white leading-tight" style="text-shadow:0 1px 16px rgba(0,0,0,0.6)"></h2>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Body -->
-      <div class="p-6 overflow-y-auto flex-1 space-y-5 bg-navy-950">
-        <p id="partner-modal-desc" class="text-navy-200 leading-relaxed text-sm"></p>
-
-        <div>
-          <p class="text-xs uppercase tracking-widest text-navy-400 font-semibold mb-3">Partnership Types</p>
-          <div id="partner-modal-types" class="flex flex-wrap gap-2"></div>
-        </div>
-
-        <div class="pt-2 flex flex-col gap-3">
-          <a id="partner-modal-website" href="#" target="_blank" rel="noopener"
-            class="inline-flex items-center gap-2 text-sm text-navy-300 hover:text-white transition-colors">
-            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-            </svg>
-            <span></span>
-          </a>
-          <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')"
-            class="w-full bg-crimson-800 text-white py-4 text-sm font-bold uppercase tracking-wider hover:bg-crimson-700 transition-colors cta-primary">
-            Become a Partner Like This →
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- ── WBL Coordinator Floating Button ── -->
   <button id="wbl-coordinator-btn" onclick="openWblAccess()"
@@ -3773,79 +3639,6 @@
         </div>`;
     }
 
-    // ── Partners: public grid ────────────────────────────────────────────────
-
-    async function loadPartners() {
-      const loading = document.getElementById('partners-loading');
-      const grid    = document.getElementById('partners-grid');
-
-      const { data, error } = await db
-        .from('partners')
-        .select('*')
-        .eq('is_active', true)
-        .order('company_name');
-
-      if (loading) loading.classList.add('hidden');
-      if (error || !data || data.length === 0) return;
-
-      _allPartners = data;
-      if (grid) {
-        // Homepage only teases a handful — full directory lives on partners.html
-        grid.innerHTML = data.slice(0, 8).map((p, i) => buildPartnerCard(p, i)).join('');
-        grid.classList.remove('hidden');
-      }
-    }
-
-    const INDUSTRY_ACCENTS = {
-      'skilled trades': '#b45309', 'manufacturing': '#b45309', 'engineering': '#b45309',
-      'health': '#0d9488', 'nonprofit': '#7c3aed', 'information technology': '#2563eb',
-      'arts': '#db2777', 'communications': '#db2777', 'finance': '#16a34a',
-      'business': '#16a34a', 'food': '#ea580c', 'human': '#9333ea', 'public services': '#9333ea',
-      'agriculture': '#65a30d',
-    };
-
-    function getIndustryAccent(industry) {
-      const key = Object.keys(INDUSTRY_ACCENTS).find(k => (industry || '').toLowerCase().includes(k));
-      return key ? INDUSTRY_ACCENTS[key] : '#AC161D';
-    }
-
-    function buildPartnerCard(p, idx) {
-      const logo = p.company_logo || (p.company_website ? `https://logo.clearbit.com/${new URL(p.company_website).hostname}` : '');
-      const name = (p.company_name || '').toLowerCase();
-      const isBPS = name.includes('batavia public school') || name === 'bps 101' || name === 'bps101';
-      const logoBg = p.logo_bg || (isBPS ? '#AC161D' : p.dark_card ? '#1a1a2e' : '#f8f8f8');
-      const accent = getIndustryAccent(p.industry);
-      const initials = esc((p.company_name || '').split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase());
-      const logoHtml = logo
-        ? `<img src="${esc(logo)}" alt="${esc(p.company_name)}" class="max-h-20 max-w-[80%] object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.outerHTML='<span class=\\'font-heading font-black text-3xl opacity-40\\' style=\\'color:${logoBg === '#f8f8f8' ? accent : '#fff'}\\'>${initials}</span>'">`
-        : `<span class="font-heading font-black text-3xl opacity-40" style="color:${logoBg === '#f8f8f8' ? accent : '#fff'}">${initials}</span>`;
-      return `
-        <div class="group bg-white rounded-xl overflow-hidden border border-navy-100 hover:border-transparent hover:shadow-2xl transition-all duration-300 cursor-pointer flex flex-col" onclick="openPartnerModal(${idx})">
-          <div class="h-36 flex items-center justify-center p-6" style="background:${logoBg}">
-            ${logoHtml}
-          </div>
-          <div class="p-4 flex-1 border-t-[3px]" style="border-color:${accent}">
-            <p class="font-heading font-bold text-navy-900 text-sm leading-tight">${esc(p.company_name)}</p>
-            ${p.industry ? `<p class="text-[10px] uppercase tracking-widest mt-1 font-semibold" style="color:${accent}">${esc(p.industry)}</p>` : ''}
-          </div>
-        </div>`;
-    }
-
-    function buildPartnerCta() {
-      return `
-        <div class="group bg-white rounded-xl overflow-hidden border-2 border-dashed border-navy-200 hover:border-crimson-300 hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')">
-          <div class="h-36 flex items-center justify-center bg-crimson-50 group-hover:bg-crimson-100 transition-colors">
-            <div class="w-14 h-14 rounded-full bg-crimson-100 group-hover:bg-white text-crimson-800 flex items-center justify-center transition-colors">
-              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            </div>
-          </div>
-          <div class="p-4 flex-1 border-t-[3px] border-crimson-200">
-            <p class="font-heading font-bold text-crimson-800 text-sm leading-tight">Your Business?</p>
-            <p class="text-[10px] uppercase tracking-widest mt-1 font-semibold text-navy-400">Join the List</p>
-          </div>
-        </div>`;
-    }
-
     // ── Public: Field Experience Partner Wall (semester showcase) ────────────
 
     let _allShowcases = [];
@@ -4140,7 +3933,6 @@
       document.getElementById('add-partner-form-title').textContent = 'New Partner';
       toggleAddPartnerForm();
       loadAdminPartners();
-      loadPartners();
       btn.disabled = false;
       btn.textContent = 'Save Partner';
     }
@@ -4148,14 +3940,12 @@
     async function togglePartnerActive(id, current) {
       await db.from('partners').update({ is_active: !current }).eq('id', id);
       loadAdminPartners();
-      loadPartners();
     }
 
     async function deletePartner(id, name) {
       if (!confirm('Delete "' + name + '"? This cannot be undone.')) return;
       await db.from('partners').delete().eq('id', id);
       loadAdminPartners();
-      loadPartners();
     }
 
     // ── Admin: manage listings inside WBL hub ────────────────────────────────
@@ -5063,8 +4853,7 @@
         </div>`;
     }
 
-    // Load partner grid, testimonials, and the partner wall on page load
-    loadPartners();
+    // Load testimonials and the partner wall on page load
     loadTestimonials();
     loadPartnerWall();
 
